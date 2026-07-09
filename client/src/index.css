@@ -42,6 +42,11 @@
     background: rgba(97, 114, 244, 0.3);
     color: #fff;
   }
+
+  option {
+    background-color: #0f1030;
+    color: #fff;
+  }
 }
 
 @layer components {
