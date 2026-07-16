@@ -8,9 +8,9 @@ net start MongoDB 2>nul || echo (MongoDB service not found, trying mongod...)
 timeout /t 2 >nul
 
 echo.
-echo Starting Backend (Node.js + Express)...
+echo Starting Backend (Python + FastAPI)...
 cd /d %~dp0server
-start cmd /k "npm run dev"
+start cmd /k "python main.py"
 
 echo.
 echo ========================================
@@ -22,7 +22,8 @@ start cmd /k "npm run dev"
 
 echo.
 echo Both servers are starting...
-echo Backend: http://localhost:5000
+echo Backend:  http://localhost:5000
+echo API Docs: http://localhost:5000/docs
 echo Frontend: http://localhost:5173
 echo.
 pause

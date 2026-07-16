@@ -12,10 +12,10 @@ A full-featured job search and hiring platform with Role-Based Access Control (R
 |-------|-----------|
 | Frontend | React 18 + TypeScript + Vite |
 | Styling | Tailwind CSS (custom dark theme) |
-| Backend | Node.js + Express + TypeScript |
-| Database | MongoDB + Mongoose |
-| Auth | JWT + bcrypt |
-| HTTP Client | Axios |
+| Backend | Python 3.11+ + FastAPI + Uvicorn |
+| Database | MongoDB (local or Atlas) + Motor (async driver) + Beanie ODM |
+| Auth | JWT (`python-jose`) + bcrypt (`passlib`) |
+| HTTP Client | Axios (frontend) + httpx (backend scraper) |
 | Routing | React Router DOM v6 |
 | Notifications | react-hot-toast |
 
@@ -44,7 +44,7 @@ A full-featured job search and hiring platform with Role-Based Access Control (R
 ### 🔐 Security
 - JWT-based authentication
 - Role-based access control (RBAC)
-- bcrypt password hashing (12 salt rounds)
+- bcrypt password hashing
 - Protected routes on both frontend and backend
 - Students cannot access manager routes and vice versa
 
@@ -53,38 +53,65 @@ A full-featured job search and hiring platform with Role-Based Access Control (R
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+
-- MongoDB (local or Atlas)
 
-### 1. Clone / Setup
+| Requirement | Version |
+|-------------|---------|
+| Python | 3.11+ |
+| Node.js | 18+ |
+| MongoDB | Local or Atlas |
+| pip | Latest |
 
-```bash
-# The project is in d:\Kalpana-assignment\
+---
+
+### ⚡ Quick Start (Windows — Recommended)
+
+Simply double-click **`start.bat`** from the project root. It will:
+1. Start the MongoDB service
+2. Launch the FastAPI backend on **http://localhost:5000**
+3. Launch the React frontend on **http://localhost:5173**
+
+```bat
+# From the project root — just double-click or run:
+start.bat
 ```
 
-### 2. Backend Setup
+---
+
+### 🔧 Manual Setup
+
+#### 1. Backend Setup (Python + FastAPI)
 
 ```bash
 cd server
 
-# Install dependencies
-npm install
+# (Recommended) Create & activate a virtual environment
+python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # macOS/Linux
 
-# Configure environment (already set up in .env)
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Environment variables (already configured in .env)
+# PORT=5000
 # MONGODB_URI=mongodb://localhost:27017/job_scraper_platform
 # JWT_SECRET=kalpana_jwt_secret_key_2024_sde1_assessment
-# PORT=5000
+# JWT_EXPIRES_IN=7d
+# CLIENT_URL=http://localhost:5173
 
 # Seed the database with test accounts
-npm run seed
+python seed.py
 
-# Start development server
-npm run dev
+# Start the FastAPI development server
+python main.py
 ```
 
 Backend runs on: `http://localhost:5000`
+Interactive API docs (Swagger UI): `http://localhost:5000/docs`
 
-### 3. Frontend Setup
+---
+
+#### 2. Frontend Setup (React + Vite)
 
 ```bash
 cd client
@@ -107,38 +134,48 @@ Frontend runs on: `http://localhost:5173`
 | 👔 Hiring Manager | manager@kalpana.com | Manager@123 |
 | 🎓 Student | student@kalpana.com | Student@123 |
 
+> Run `python seed.py` from the `server/` directory to populate these accounts.
+
 ---
 
 ## 📁 Project Structure
 
 ```
 Kalpana-assignment/
-├── server/               # Backend (Node.js + Express + MongoDB)
-│   ├── src/
-│   │   ├── config/       # Database connection
-│   │   ├── controllers/  # Route handlers
-│   │   ├── middleware/   # Auth & role middleware
-│   │   ├── models/       # Mongoose schemas
-│   │   ├── routes/       # Express routes
-│   │   ├── seed.ts       # Database seeder
-│   │   └── index.ts      # App entry
-│   └── package.json
+├── start.bat                 # One-click startup script (Windows)
+├── README.md
 │
-└── client/               # Frontend (React + Vite + Tailwind)
-    ├── src/
-    │   ├── api/           # API wrapper functions
-    │   ├── components/    # UI & layout components
-    │   ├── context/       # AuthContext
-    │   ├── pages/         # All page components
-    │   ├── routes/        # Route guards
-    │   ├── types/         # TypeScript interfaces
-    │   └── App.tsx        # Router
-    └── package.json
+├── server/                   # Backend (Python + FastAPI + MongoDB)
+│   ├── main.py               # App entry point (Uvicorn server)
+│   ├── seed.py               # Database seeder
+│   ├── requirements.txt      # Python dependencies
+│   ├── .env                  # Environment variables
+│   └── app/
+│       ├── config/           # Database connection (Motor / Beanie)
+│       ├── models/           # Beanie document models
+│       ├── routes/           # FastAPI routers
+│       ├── controllers/      # Business logic / route handlers
+│       └── middleware/       # Auth & role dependencies
+│
+└── client/                   # Frontend (React + Vite + Tailwind CSS)
+    ├── index.html
+    ├── package.json
+    ├── vite.config.ts
+    └── src/
+        ├── api/              # Axios API wrapper functions
+        ├── components/       # Shared UI & layout components
+        ├── context/          # AuthContext (React Context API)
+        ├── pages/            # All page components
+        ├── routes/           # Route guards (ProtectedRoute)
+        ├── types/            # TypeScript interfaces
+        └── App.tsx           # Router configuration
 ```
 
 ---
 
 ## 📡 API Endpoints
+
+Interactive docs available at **`http://localhost:5000/docs`** (Swagger UI) once the backend is running.
 
 ### Auth
 | Method | Endpoint | Description |
@@ -169,7 +206,7 @@ Kalpana-assignment/
 ### Scraper
 | Method | Endpoint | Role | Description |
 |--------|----------|------|-------------|
-| GET | `/api/scraper/search?keyword=&location=` | Student | Scrape jobs |
+| GET | `/api/scraper/search?keyword=&location=` | Student | Scrape external jobs |
 
 ---
 
