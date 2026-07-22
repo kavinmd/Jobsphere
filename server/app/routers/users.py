@@ -51,7 +51,7 @@ async def update_profile(
     if body.bio is not None:
         update_data["bio"] = body.bio
     if body.resumeUrl is not None:
-        update_data["resume_url"] = body.resumeUrl
+        update_data["resumeUrl"] = body.resumeUrl
     if body.company is not None and current_user.role == "hiring_manager":
         update_data["company"] = body.company
     if body.avatar is not None:

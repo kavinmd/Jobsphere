@@ -104,7 +104,7 @@ async def apply_to_job(
         if not job or job.status == "closed":
             raise HTTPException(404, "Job not found or is closed.")
 
-        existing = await Application.find_one({"student_id": student_id, "job_id": body.jobId})
+        existing = await Application.find_one({"studentId": student_id, "jobId": body.jobId})
         if existing:
             raise HTTPException(400, "You have already applied to this job.")
 
@@ -118,7 +118,7 @@ async def apply_to_job(
         await application.insert()
 
         # Increment application count
-        await job.inc({"application_count": 1})
+        await job.inc({Job.application_count: 1})
 
         populated = await _enrich_application_with_job(application)
         return {
@@ -132,8 +132,8 @@ async def apply_to_job(
             raise HTTPException(400, "externalJobData is required for external jobs.")
 
         existing = await Application.find_one({
-            "student_id": student_id,
-            "external_job_data.apply_url": body.externalJobData.applyUrl,
+            "studentId": student_id,
+            "externalJobData.applyUrl": body.externalJobData.applyUrl,
         })
         if existing:
             raise HTTPException(400, "You have already applied to this job.")
@@ -168,7 +168,7 @@ async def apply_to_job(
 @router.get("/my")
 async def get_my_applications(current_user: User = Depends(authorize("student"))):
     apps_raw = (
-        await Application.find({"student_id": str(current_user.id)})
+        await Application.find({"studentId": str(current_user.id)})
         .sort("-created_at")
         .to_list()
     )
@@ -180,10 +180,10 @@ async def get_my_applications(current_user: User = Depends(authorize("student"))
 @router.get("/stats")
 async def get_student_stats(current_user: User = Depends(authorize("student"))):
     sid = str(current_user.id)
-    total = await Application.find({"student_id": sid}).count()
-    pending = await Application.find({"student_id": sid, "status": "pending"}).count()
-    shortlisted = await Application.find({"student_id": sid, "status": "shortlisted"}).count()
-    rejected = await Application.find({"student_id": sid, "status": "rejected"}).count()
+    total = await Application.find({"studentId": sid}).count()
+    pending = await Application.find({"studentId": sid, "status": "pending"}).count()
+    shortlisted = await Application.find({"studentId": sid, "status": "shortlisted"}).count()
+    rejected = await Application.find({"studentId": sid, "status": "rejected"}).count()
     return {"success": True, "data": {"total": total, "pending": pending, "shortlisted": shortlisted, "rejected": rejected}}
 
 
@@ -202,7 +202,7 @@ async def get_job_applicants(
     if job.posted_by != str(current_user.id):
         raise HTTPException(403, "Not authorized to view this job's applicants.")
 
-    apps_raw = await Application.find({"job_id": job_id}).sort("-created_at").to_list()
+    apps_raw = await Application.find({"jobId": job_id}).sort("-created_at").to_list()
     apps = [await _enrich_application_with_student(a) for a in apps_raw]
 
     job_data = job.model_dump(by_alias=True)

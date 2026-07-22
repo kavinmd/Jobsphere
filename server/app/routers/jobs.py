@@ -110,7 +110,7 @@ async def get_my_jobs(current_user: User = Depends(authorize("hiring_manager")))
     job_ids = [str(j.id) for j in jobs_raw]
     count_map: dict[str, int] = {}
     for jid in job_ids:
-        count_map[jid] = await Application.find({"job_id": jid}).count()
+        count_map[jid] = await Application.find({"jobId": jid}).count()
 
     jobs = []
     for j in jobs_raw:
@@ -130,8 +130,8 @@ async def get_manager_stats(current_user: User = Depends(authorize("hiring_manag
     open_jobs = await Job.find({"posted_by": manager_id, "status": "open"}).count()
 
     my_job_ids = [str(j.id) for j in await Job.find({"posted_by": manager_id}).to_list()]
-    total_applicants = await Application.find({"job_id": {"$in": my_job_ids}}).count()
-    pending_applicants = await Application.find({"job_id": {"$in": my_job_ids}, "status": "pending"}).count()
+    total_applicants = await Application.find({"jobId": {"$in": my_job_ids}}).count()
+    pending_applicants = await Application.find({"jobId": {"$in": my_job_ids}, "status": "pending"}).count()
 
     return {
         "success": True,
@@ -252,5 +252,5 @@ async def delete_job(
         raise HTTPException(403, "Not authorized to delete this job.")
 
     await job.delete()
-    await Application.find({"job_id": job_id}).delete()
+    await Application.find({"jobId": job_id}).delete()
     return {"success": True, "message": "Job deleted successfully."}
