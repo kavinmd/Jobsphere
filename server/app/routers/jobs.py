@@ -4,6 +4,7 @@ from typing import Optional, List
 from datetime import datetime
 import re
 from bson import ObjectId
+from beanie.operators import In
 
 from app.models.job import Job
 from app.models.application import Application
@@ -104,13 +105,13 @@ async def get_all_jobs(
 # GET /api/jobs/my  — manager's own jobs
 @router.get("/my")
 async def get_my_jobs(current_user: User = Depends(authorize("hiring_manager"))):
-    jobs_raw = await Job.find({"posted_by": str(current_user.id)}).sort("-created_at").to_list()
+    jobs_raw = await Job.find(Job.posted_by == str(current_user.id)).sort("-created_at").to_list()
 
     # Aggregate application counts
     job_ids = [str(j.id) for j in jobs_raw]
     count_map: dict[str, int] = {}
     for jid in job_ids:
-        count_map[jid] = await Application.find({"jobId": jid}).count()
+        count_map[jid] = await Application.find(Application.job_id == jid).count()
 
     jobs = []
     for j in jobs_raw:
@@ -126,12 +127,12 @@ async def get_my_jobs(current_user: User = Depends(authorize("hiring_manager")))
 @router.get("/stats")
 async def get_manager_stats(current_user: User = Depends(authorize("hiring_manager"))):
     manager_id = str(current_user.id)
-    total_jobs = await Job.find({"posted_by": manager_id}).count()
-    open_jobs = await Job.find({"posted_by": manager_id, "status": "open"}).count()
+    total_jobs = await Job.find(Job.posted_by == manager_id).count()
+    open_jobs = await Job.find(Job.posted_by == manager_id, Job.status == "open").count()
 
-    my_job_ids = [str(j.id) for j in await Job.find({"posted_by": manager_id}).to_list()]
-    total_applicants = await Application.find({"jobId": {"$in": my_job_ids}}).count()
-    pending_applicants = await Application.find({"jobId": {"$in": my_job_ids}, "status": "pending"}).count()
+    my_job_ids = [str(j.id) for j in await Job.find(Job.posted_by == manager_id).to_list()]
+    total_applicants = await Application.find(In(Application.job_id, my_job_ids)).count()
+    pending_applicants = await Application.find(In(Application.job_id, my_job_ids), Application.status == "pending").count()
 
     return {
         "success": True,
