@@ -253,5 +253,5 @@ async def delete_job(
         raise HTTPException(403, "Not authorized to delete this job.")
 
     await job.delete()
-    await Application.find({"jobId": job_id}).delete()
+    await Application.find(Application.job_id == job_id).delete()
     return {"success": True, "message": "Job deleted successfully."}

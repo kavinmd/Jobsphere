@@ -63,7 +63,7 @@ const ApplicantTracker: React.FC = () => {
         notes: notes[appId],
       });
       setApplications(prev =>
-        prev.map(a => (a._id === appId ? { ...a, status: newStatus as Application['status'] } : a))
+        prev.map(a => (a._id === appId ? { ...a, status: newStatus as Application['status'], notes: notes[appId] } : a))
       );
       toast.success('Status updated');
     } catch {

@@ -136,7 +136,7 @@ async def apply_to_job(
 
         existing = await Application.find_one(
             Application.student_id == student_id,
-            Application.external_job_data.apply_url == body.externalJobData.applyUrl,
+            {"externalJobData.applyUrl": body.externalJobData.applyUrl},
         )
         if existing:
             raise HTTPException(400, "You have already applied to this job.")

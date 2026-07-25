@@ -2,9 +2,7 @@ from beanie import Document, Indexed
 from pydantic import EmailStr, Field, field_validator
 from typing import Optional, Literal
 from datetime import datetime
-from passlib.context import CryptContext
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+import bcrypt
 
 UserRole = Literal["student", "hiring_manager"]
 
@@ -41,11 +39,20 @@ class User(Document):
 
     def hash_password(self) -> None:
         """Hash the current plain-text password in place."""
-        self.password = pwd_context.hash(self.password)
+        password_bytes = self.password.encode('utf-8')
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(password_bytes, salt)
+        self.password = hashed.decode('utf-8')
 
     def verify_password(self, plain_password: str) -> bool:
         """Compare plain password against the stored hash."""
-        return pwd_context.verify(plain_password, self.password)
+        try:
+            return bcrypt.checkpw(
+                plain_password.encode('utf-8'),
+                self.password.encode('utf-8')
+            )
+        except Exception:
+            return False
 
     def to_safe_dict(self) -> dict:
         """Return user data without password field."""
