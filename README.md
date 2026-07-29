@@ -1,6 +1,6 @@
 # 🚀 JobSphere — Job Scraper Platform
 
-> **Kalpana Software Solution Pvt. Ltd. — SDE-1 Full Stack Assessment**
+> **Full-Featured Job Search & Application Management Platform**
 
 A full-featured job search and hiring platform with Role-Based Access Control (RBAC). Students can search & scrape jobs from multiple platforms and apply directly. Hiring managers can post, manage jobs, and track applicants.
 
@@ -95,7 +95,7 @@ pip install -r requirements.txt
 # Environment variables (already configured in .env)
 # PORT=5000
 # MONGODB_URI=mongodb://localhost:27017/job_scraper_platform
-# JWT_SECRET=kalpana_jwt_secret_key_2024_sde1_assessment
+# JWT_SECRET=jobsphere_jwt_secret_key_2026
 # JWT_EXPIRES_IN=7d
 # CLIENT_URL=http://localhost:5173
 
@@ -131,8 +131,8 @@ Frontend runs on: `http://localhost:5173`
 
 | Role | Email | Password |
 |------|-------|----------|
-| 👔 Hiring Manager | manager@kalpana.com | Manager@123 |
-| 🎓 Student | student@kalpana.com | Student@123 |
+| 👔 Hiring Manager | manager@jobsphere.com | Manager@123 |
+| 🎓 Student | student@jobsphere.com | Student@123 |
 
 > Run `python seed.py` from the `server/` directory to populate these accounts.
 
@@ -141,7 +141,7 @@ Frontend runs on: `http://localhost:5173`
 ## 📁 Project Structure
 
 ```
-Kalpana-assignment/
+Jobsphere/
 ├── start.bat                 # One-click startup script (Windows)
 ├── README.md
 │
@@ -221,12 +221,6 @@ Interactive docs available at **`http://localhost:5000/docs`** (Swagger UI) once
 
 ---
 
-## 📤 Submission
-
-- **GitHub**: [Your GitHub URL]
-- **Live Frontend**: [Your Frontend URL]
-- **Backend API**: [Your Backend URL]
-
 ---
 
-*Built for Kalpana Software Solution Pvt. Ltd. SDE-1 Assessment — July 2026*
+*JobSphere Platform — Built with React, FastAPI & MongoDB*

@@ -41,7 +41,7 @@ const Login: React.FC = () => {
 
   const fillDemo = (role: 'student' | 'manager') => {
     setForm({
-      email: role === 'student' ? 'student@kalpana.com' : 'manager@kalpana.com',
+      email: role === 'student' ? 'student@jobsphere.com' : 'manager@jobsphere.com',
       password: role === 'student' ? 'Student@123' : 'Manager@123',
     });
   };

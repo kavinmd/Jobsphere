@@ -37,10 +37,10 @@ async def seed():
     # Create Hiring Manager
     manager = User(
         name="Ankit Kumar",
-        email="manager@kalpana.com",
+        email="manager@jobsphere.com",
         password="Manager@123",
         role="hiring_manager",
-        company="Kalpana Software Solution Pvt. Ltd.",
+        company="JobSphere Tech Pvt. Ltd.",
         location="Bengaluru, Karnataka",
         bio="Experienced hiring manager with 8+ years in tech recruitment.",
         phone="+91 98765 43210",
@@ -51,7 +51,7 @@ async def seed():
     # Create Student
     student = User(
         name="Rahul Sharma",
-        email="student@kalpana.com",
+        email="student@jobsphere.com",
         password="Student@123",
         role="student",
         location="Delhi, India",
@@ -65,7 +65,7 @@ async def seed():
     jobs_data = [
         {
             "title": "Full Stack Developer",
-            "company": "Kalpana Software Solution Pvt. Ltd.",
+            "company": "JobSphere Tech Pvt. Ltd.",
             "location": "Bengaluru, Karnataka",
             "description": (
                 "We are looking for a talented Full Stack Developer to join our growing engineering team.\n\n"
@@ -91,7 +91,7 @@ async def seed():
         },
         {
             "title": "Frontend React Developer",
-            "company": "Kalpana Software Solution Pvt. Ltd.",
+            "company": "JobSphere Tech Pvt. Ltd.",
             "location": "Remote",
             "description": (
                 "Join our frontend team to build beautiful and performant user interfaces.\n\n"
@@ -110,7 +110,7 @@ async def seed():
         },
         {
             "title": "Backend Python Developer",
-            "company": "Kalpana Software Solution Pvt. Ltd.",
+            "company": "JobSphere Tech Pvt. Ltd.",
             "location": "Hyderabad, Telangana",
             "description": (
                 "We need a backend developer to build robust APIs and microservices.\n\n"
@@ -129,7 +129,7 @@ async def seed():
         },
         {
             "title": "SDE-1 Internship (6 months)",
-            "company": "Kalpana Software Solution Pvt. Ltd.",
+            "company": "JobSphere Tech Pvt. Ltd.",
             "location": "Bengaluru, Karnataka",
             "description": (
                 "Exciting 6-month internship for final year students and fresh graduates.\n\n"
@@ -169,11 +169,11 @@ async def seed():
     print("Test Credentials:")
     print("?" * 38)
     print("? Hiring Manager:")
-    print("   Email: manager@kalpana.com")
+    print("   Email: manager@jobsphere.com")
     print("   Password: Manager@123")
     print("")
     print("? Student:")
-    print("   Email: student@kalpana.com")
+    print("   Email: student@jobsphere.com")
     print("   Password: Student@123")
     print("?" * 38 + "\n")
 

@@ -91,7 +91,7 @@ const Landing: React.FC = () => {
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-semibold"
              style={{ background: 'rgba(97,114,244,0.15)', border: '1px solid rgba(97,114,244,0.3)', color: '#a5b8fc' }}>
           <Star size={12} fill="currentColor" />
-          SDE-1 Full Stack Assessment — Kalpana Software Solution
+          Full-Stack Job Search & Application Platform
         </div>
 
         <h1 className="text-5xl lg:text-7xl font-black text-white leading-tight mb-6">
@@ -217,7 +217,7 @@ const Landing: React.FC = () => {
           <span className="text-white font-semibold">JobSphere</span>
         </div>
         <p className="text-white/30 text-xs">
-          Built for Kalpana Software Solution Pvt. Ltd. SDE-1 Assessment
+          JobSphere Platform — Job Search & Hiring Solution
         </p>
       </footer>
     </div>
