@@ -1,226 +1,210 @@
-# 🚀 JobSphere — Job Scraper Platform
+# 🌐 JobSphere — Enterprise Job Aggregator & Recruitment Platform
 
-> **Full-Featured Job Search & Application Management Platform**
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Frontend](https://img.shields.io/badge/Frontend-React_18_%7C_TypeScript_%7C_Vite-61DAFB?logo=react)](https://react.dev/)
+[![Backend](https://img.shields.io/badge/Backend-FastAPI_%7C_Python_3.11+-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Database](https://img.shields.io/badge/Database-MongoDB_%7C_Beanie_ODM-47A248?logo=mongodb)](https://www.mongodb.com/)
 
-A full-featured job search and hiring platform with Role-Based Access Control (RBAC). Students can search & scrape jobs from multiple platforms and apply directly. Hiring managers can post, manage jobs, and track applicants.
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18 + TypeScript + Vite |
-| Styling | Tailwind CSS (custom dark theme) |
-| Backend | Python 3.11+ + FastAPI + Uvicorn |
-| Database | MongoDB (local or Atlas) + Motor (async driver) + Beanie ODM |
-| Auth | JWT (`python-jose`) + bcrypt (`passlib`) |
-| HTTP Client | Axios (frontend) + httpx (backend scraper) |
-| Routing | React Router DOM v6 |
-| Notifications | react-hot-toast |
+> **JobSphere** is a full-featured job search, web scraping, and recruitment management platform. Designed with a modern dark-mode glassmorphic UI, it bridges candidate job discovery across major hiring platforms with end-to-end employer applicant tracking.
 
 ---
 
-## ✨ Features
+## 📌 Executive Summary
 
-### 🎓 Student Features
-- Signup/Login with JWT authentication
-- **Internal Job Search** — filter by keyword, location, type
-- **External Job Scraper** — scrape jobs from LinkedIn, Naukri, Internshala, Unstop
-- Apply to both internal and external jobs with optional cover letter
-- Application history with real-time status tracking
-- Profile management (CRUD)
-
-### 👔 Hiring Manager Features
-- Post new job openings with full details
-- Edit/update existing job postings
-- Close or delete job postings
-- View all applicants for each job
-- Update applicant status (pending → reviewed → shortlisted → rejected)
-- Add notes to applicants
-- Manager dashboard with stats
-- Profile management (CRUD)
-
-### 🔐 Security
-- JWT-based authentication
-- Role-based access control (RBAC)
-- bcrypt password hashing
-- Protected routes on both frontend and backend
-- Students cannot access manager routes and vice versa
+Finding and managing jobs across multiple job boards can be fragmented. JobSphere provides a unified platform featuring:
+1. **Aggregated Job Scraping**: Live multi-platform search across LinkedIn, Naukri, Internshala, and Unstop.
+2. **Internal Job Posting & ATS**: Employer portal to create postings, track application stages, and review candidate portfolios.
+3. **Candidate Workflow**: One-stop portal for job search, custom cover letters, and real-time application status tracking.
+4. **Role-Based Access Control (RBAC)**: Secure separation between Candidate students and Hiring Managers using JWT authentication.
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Technology Stack
+
+### Frontend Architecture
+- **Framework**: React 18 + TypeScript + Vite
+- **Styling & Theme**: Vanilla CSS with custom glassmorphism design system & dark mode tokens
+- **Routing**: React Router DOM v6
+- **State & Auth**: React Context API (`AuthContext`)
+- **HTTP & Toast Notifications**: Axios & `react-hot-toast`
+
+### Backend Architecture
+- **Framework**: FastAPI (Python 3.11+) + Uvicorn ASGI server
+- **Database**: MongoDB (Local or Atlas)
+- **Object-Document Mapper**: Beanie ODM (built on Motor async driver & Pydantic v2)
+- **Scraper Engine**: Async `httpx` + BeautifulSoup4 parsing engine
+- **Security & Auth**: OAuth2 / JWT bearer tokens (`python-jose`) + bcrypt password hashing (`passlib`)
+
+---
+
+## 🌟 Core Features
+
+### 🎓 Candidate Portal (Student)
+- **Single-Sign-On & Registration**: Secure account creation with persistent JWT sessions.
+- **Internal Job Search**: Search & filter open positions by keyword, location, and employment type.
+- **Live Multi-Platform Scraper**: Fetch real-time job listings from external sources (LinkedIn, Naukri, Internshala, Unstop).
+- **Direct Application Manager**: Apply to internal postings with custom cover letters and track status history.
+- **Profile Management**: Update skills, resume links, bio, and contact info.
+
+### 👔 Employer & Recruiter Portal (Hiring Manager)
+- **Job Creation & Management**: Publish, edit, pause, or remove job listings.
+- **Applicant Tracking System (ATS)**: View candidates per job, manage hiring stage (`pending` → `reviewed` → `shortlisted` → `rejected`), and leave candidate notes.
+- **Recruitment Analytics**: Overview dashboard showing active job counts, total applicants, and hiring metrics.
+- **Profile Management**: Manage company profiles and recruiter details.
+
+### 🔐 Platform Security
+- **Role-Based Access Control (RBAC)**: Strict API dependency validation for route authorization.
+- **Password Hashing**: Cryptographic salt & hashing with bcrypt.
+- **CORS & Environment Protection**: Controlled cross-origin policies.
+
+---
+
+## 📁 Repository Structure
+
+```
+Jobsphere/
+├── start.bat                 # One-click startup launcher for Windows
+├── README.md                 # Project documentation
+│
+├── server/                   # Backend FastAPI Application
+│   ├── main.py               # Application entry point & Uvicorn runner
+│   ├── seed.py               # Database seeder with sample data
+│   ├── requirements.txt      # Python dependencies
+│   ├── .env                  # Backend configuration & secrets
+│   └── app/
+│       ├── config/           # Database setup & Beanie initialization
+│       ├── models/           # Beanie document models (User, Job, Application)
+│       ├── routers/          # FastAPI API endpoint modules
+│       └── middleware/       # Auth & RBAC security dependencies
+│
+└── client/                   # Frontend React Application
+    ├── index.html            # Entry HTML document
+    ├── package.json          # Node dependencies & scripts
+    ├── vite.config.ts        # Vite configuration & dev server options
+    └── src/
+        ├── api/              # Axios HTTP client instances & API methods
+        ├── components/       # UI & Layout components
+        ├── context/          # Auth state management
+        ├── pages/            # Application views (Landing, Dashboard, Tracker)
+        ├── routes/           # Protected routes & role guards
+        └── types/            # TypeScript interfaces & domain types
+```
+
+---
+
+## 🚀 Quick Start Guide
 
 ### Prerequisites
-
-| Requirement | Version |
-|-------------|---------|
-| Python | 3.11+ |
-| Node.js | 18+ |
-| MongoDB | Local or Atlas |
-| pip | Latest |
+- **Python**: 3.11 or higher
+- **Node.js**: v18.0 or higher
+- **MongoDB**: Community Server (v6.0+) running locally or a MongoDB Atlas Cluster connection URI
 
 ---
 
-### ⚡ Quick Start (Windows — Recommended)
+### ⚡ One-Click Startup (Windows)
 
-Simply double-click **`start.bat`** from the project root. It will:
-1. Start the MongoDB service
-2. Launch the FastAPI backend on **http://localhost:5000**
-3. Launch the React frontend on **http://localhost:5173**
+Launch the entire stack (Database check, Backend server, and Frontend client) with a single command:
 
-```bat
-# From the project root — just double-click or run:
+```cmd
 start.bat
 ```
 
+- **Frontend Application**: `http://localhost:5173`
+- **Backend API**: `http://localhost:5000`
+- **Interactive API Documentation (Swagger)**: `http://localhost:5000/docs`
+
 ---
 
-### 🔧 Manual Setup
+### 🔧 Manual Installation & Setup
 
-#### 1. Backend Setup (Python + FastAPI)
+#### 1. Backend Setup (FastAPI)
 
 ```bash
+# Navigate to backend directory
 cd server
 
-# (Recommended) Create & activate a virtual environment
+# Create virtual environment
 python -m venv venv
-venv\Scripts\activate        # Windows
-# source venv/bin/activate   # macOS/Linux
 
-# Install Python dependencies
+# Activate virtual environment
+# Windows PowerShell:
+.\venv\Scripts\Activate.ps1
+# macOS/Linux:
+# source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
 
-# Environment variables (already configured in .env)
-# PORT=5000
-# MONGODB_URI=mongodb://localhost:27017/job_scraper_platform
-# JWT_SECRET=jobsphere_jwt_secret_key_2026
-# JWT_EXPIRES_IN=7d
-# CLIENT_URL=http://localhost:5173
-
-# Seed the database with test accounts
+# Seed initial test database
 python seed.py
 
-# Start the FastAPI development server
+# Start FastAPI development server
 python main.py
 ```
-
-Backend runs on: `http://localhost:5000`
-Interactive API docs (Swagger UI): `http://localhost:5000/docs`
-
----
 
 #### 2. Frontend Setup (React + Vite)
 
 ```bash
+# Navigate to frontend directory
 cd client
 
-# Install dependencies
+# Install packages
 npm install
 
-# Start development server
+# Start Vite dev server
 npm run dev
 ```
 
-Frontend runs on: `http://localhost:5173`
+---
+
+## 🔑 Demo Access Credentials
+
+| Role | Email | Password | Access Level |
+|:---|:---|:---|:---|
+| 👔 **Hiring Manager** | `manager@jobsphere.com` | `Manager@123` | Full Employer & ATS Portal |
+| 🎓 **Student / Candidate** | `student@jobsphere.com` | `Student@123` | Candidate Search & Application Portal |
+
+*Run `python seed.py` in `server/` to initialize demo accounts.*
 
 ---
 
-## 🔑 Test Credentials
+## 📡 REST API Reference
 
-| Role | Email | Password |
-|------|-------|----------|
-| 👔 Hiring Manager | manager@jobsphere.com | Manager@123 |
-| 🎓 Student | student@jobsphere.com | Student@123 |
+Full interactive documentation is generated automatically via OpenAPI at `http://localhost:5000/docs`.
 
-> Run `python seed.py` from the `server/` directory to populate these accounts.
+### Authentication Endpoints
+| Method | Route | Description |
+|:---|:---|:---|
+| `POST` | `/api/auth/register` | Register a new user account |
+| `POST` | `/api/auth/login` | Authenticate user & return JWT token |
+| `GET` | `/api/auth/me` | Fetch authenticated user profile |
 
----
+### Job Management Endpoints
+| Method | Route | Role | Description |
+|:---|:---|:---|:---|
+| `GET` | `/api/jobs` | Public/Auth | List all active job postings |
+| `GET` | `/api/jobs/my` | Manager | List manager's created job postings |
+| `GET` | `/api/jobs/stats` | Manager | Fetch recruiting statistics & metrics |
+| `POST` | `/api/jobs` | Manager | Create a new job posting |
+| `PUT` | `/api/jobs/{id}` | Manager | Update existing job details |
+| `DELETE` | `/api/jobs/{id}` | Manager | Delete a job posting |
 
-## 📁 Project Structure
+### Application Management Endpoints
+| Method | Route | Role | Description |
+|:---|:---|:---|:---|
+| `POST` | `/api/applications` | Student | Submit job application |
+| `GET` | `/api/applications/my` | Student | Fetch candidate's application history |
+| `GET` | `/api/applications/stats` | Student | Candidate dashboard analytics |
+| `GET` | `/api/applications/job/{id}` | Manager | Fetch applicants for a specific job |
+| `PUT` | `/api/applications/{id}/status` | Manager | Update candidate application stage |
 
-```
-Jobsphere/
-├── start.bat                 # One-click startup script (Windows)
-├── README.md
-│
-├── server/                   # Backend (Python + FastAPI + MongoDB)
-│   ├── main.py               # App entry point (Uvicorn server)
-│   ├── seed.py               # Database seeder
-│   ├── requirements.txt      # Python dependencies
-│   ├── .env                  # Environment variables
-│   └── app/
-│       ├── config/           # Database connection (Motor / Beanie)
-│       ├── models/           # Beanie document models
-│       ├── routes/           # FastAPI routers
-│       ├── controllers/      # Business logic / route handlers
-│       └── middleware/       # Auth & role dependencies
-│
-└── client/                   # Frontend (React + Vite + Tailwind CSS)
-    ├── index.html
-    ├── package.json
-    ├── vite.config.ts
-    └── src/
-        ├── api/              # Axios API wrapper functions
-        ├── components/       # Shared UI & layout components
-        ├── context/          # AuthContext (React Context API)
-        ├── pages/            # All page components
-        ├── routes/           # Route guards (ProtectedRoute)
-        ├── types/            # TypeScript interfaces
-        └── App.tsx           # Router configuration
-```
+### Aggregator & Scraper Endpoints
+| Method | Route | Role | Description |
+|:---|:---|:---|:---|
+| `GET` | `/api/scraper/search` | Student | Scrape live external jobs (LinkedIn, Naukri, etc.) |
 
 ---
 
-## 📡 API Endpoints
+## 📄 License
 
-Interactive docs available at **`http://localhost:5000/docs`** (Swagger UI) once the backend is running.
-
-### Auth
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Register new user |
-| POST | `/api/auth/login` | Login & get JWT |
-| GET | `/api/auth/me` | Get current user |
-
-### Jobs
-| Method | Endpoint | Role | Description |
-|--------|----------|------|-------------|
-| GET | `/api/jobs` | Auth | All open jobs |
-| GET | `/api/jobs/my` | Manager | Manager's jobs |
-| GET | `/api/jobs/stats` | Manager | Dashboard stats |
-| POST | `/api/jobs` | Manager | Create job |
-| PUT | `/api/jobs/:id` | Manager | Update job |
-| DELETE | `/api/jobs/:id` | Manager | Delete job |
-
-### Applications
-| Method | Endpoint | Role | Description |
-|--------|----------|------|-------------|
-| POST | `/api/applications` | Student | Apply to job |
-| GET | `/api/applications/my` | Student | My applications |
-| GET | `/api/applications/stats` | Student | Student stats |
-| GET | `/api/applications/job/:id` | Manager | Job applicants |
-| PUT | `/api/applications/:id/status` | Manager | Update status |
-
-### Scraper
-| Method | Endpoint | Role | Description |
-|--------|----------|------|-------------|
-| GET | `/api/scraper/search?keyword=&location=` | Student | Scrape external jobs |
-
----
-
-## 🎨 Design Highlights
-
-- Dark mode with glassmorphism effects
-- Custom gradient color palette (purple → pink)
-- Smooth animations and micro-interactions
-- Responsive layout with sidebar navigation
-- Inter font for premium typography
-- Animated background orbs
-
----
-
----
-
-*JobSphere Platform — Built with React, FastAPI & MongoDB*
+This project is licensed under the **MIT License**.
