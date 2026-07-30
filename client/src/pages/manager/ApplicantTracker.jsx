@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { applicationsApi } from '../../api/applications.api';
-import { Application, Job, User } from '../../types';
 import toast from 'react-hot-toast';
 import { Users, ArrowLeft, Mail, Phone, MapPin, FileText, ChevronDown, Loader2, ExternalLink, Clock, CheckCircle, Eye, XCircle } from 'lucide-react';
 import { format } from 'date-fns';
@@ -14,38 +13,38 @@ const STATUS_OPTIONS = [
   { value: 'rejected', label: 'Rejected', cls: 'badge-red' },
 ];
 
-const STATUS_ICONS: Record<string, React.ElementType> = {
+const STATUS_ICONS = {
   pending: Clock,
   reviewed: Eye,
   shortlisted: CheckCircle,
   rejected: XCircle,
 };
 
-const ApplicantTracker: React.FC = () => {
-  const { jobId } = useParams<{ jobId: string }>();
+const ApplicantTracker = () => {
+  const { jobId } = useParams();
   const navigate = useNavigate();
-  const [applications, setApplications] = useState<Application[]>([]);
-  const [job, setJob] = useState<Job | null>(null);
+  const [applications, setApplications] = useState([]);
+  const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [updatingId, setUpdatingId] = useState<string | null>(null);
-  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [updatingId, setUpdatingId] = useState(null);
+  const [notes, setNotes] = useState({});
   const [filterStatus, setFilterStatus] = useState('all');
 
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await applicationsApi.getJobApplicants(jobId!);
+        const res = await applicationsApi.getJobApplicants(jobId);
         if (res.success && res.data) {
           setApplications(res.data.applications);
-          setJob(res.data.job as Job);
+          setJob(res.data.job);
           // Init notes
-          const notesMap: Record<string, string> = {};
-          res.data.applications.forEach((app: Application) => {
+          const notesMap = {};
+          res.data.applications.forEach((app) => {
             notesMap[app._id] = app.notes || '';
           });
           setNotes(notesMap);
         }
-      } catch (err: any) {
+      } catch (err) {
         toast.error('Failed to load applicants');
         navigate('/manager/jobs');
       } finally {
@@ -55,7 +54,7 @@ const ApplicantTracker: React.FC = () => {
     fetch();
   }, [jobId]);
 
-  const handleStatusChange = async (appId: string, newStatus: string) => {
+  const handleStatusChange = async (appId, newStatus) => {
     setUpdatingId(appId);
     try {
       await applicationsApi.updateApplicationStatus(appId, {
@@ -63,7 +62,7 @@ const ApplicantTracker: React.FC = () => {
         notes: notes[appId],
       });
       setApplications(prev =>
-        prev.map(a => (a._id === appId ? { ...a, status: newStatus as Application['status'], notes: notes[appId] } : a))
+        prev.map(a => (a._id === appId ? { ...a, status: newStatus, notes: notes[appId] } : a))
       );
       toast.success('Status updated');
     } catch {
@@ -133,7 +132,7 @@ const ApplicantTracker: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {filtered.map(app => {
-            const student = app.studentId as User;
+            const student = app.studentId;
             const StatusIcon = STATUS_ICONS[app.status] || Clock;
             const statusCfg = STATUS_OPTIONS.find(s => s.value === app.status);
             return (

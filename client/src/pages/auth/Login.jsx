@@ -5,18 +5,18 @@ import { authApi } from '../../api/auth.api';
 import toast from 'react-hot-toast';
 import { Zap, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
-const Login: React.FC = () => {
+const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.email || !form.password) {
       toast.error('Please fill in all fields');
@@ -32,14 +32,14 @@ const Login: React.FC = () => {
         const redirect = res.data.user.role === 'hiring_manager' ? '/manager/dashboard' : '/student/dashboard';
         navigate(redirect);
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const fillDemo = (role: 'student' | 'manager') => {
+  const fillDemo = (role) => {
     setForm({
       email: role === 'student' ? 'student@jobsphere.com' : 'manager@jobsphere.com',
       password: role === 'student' ? 'Student@123' : 'Manager@123',

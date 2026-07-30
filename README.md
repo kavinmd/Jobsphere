@@ -1,7 +1,7 @@
 # 🌐 JobSphere — Enterprise Job Aggregator & Recruitment Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Frontend](https://img.shields.io/badge/Frontend-React_18_%7C_TypeScript_%7C_Vite-61DAFB?logo=react)](https://react.dev/)
+[![Frontend](https://img.shields.io/badge/Frontend-React_19_%7C_JavaScript_%7C_Vite-61DAFB?logo=react)](https://react.dev/)
 [![Backend](https://img.shields.io/badge/Backend-FastAPI_%7C_Python_3.11+-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Database](https://img.shields.io/badge/Database-MongoDB_%7C_Beanie_ODM-47A248?logo=mongodb)](https://www.mongodb.com/)
 
@@ -22,7 +22,7 @@ Finding and managing jobs across multiple job boards can be fragmented. JobSpher
 ## 🛠️ Technology Stack
 
 ### Frontend Architecture
-- **Framework**: React 18 + TypeScript + Vite
+- **Framework**: React 19 + JavaScript + Vite
 - **Styling & Theme**: Vanilla CSS with custom glassmorphism design system & dark mode tokens
 - **Routing**: React Router DOM v6
 - **State & Auth**: React Context API (`AuthContext`)

@@ -2,11 +2,7 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-interface RoleRouteProps {
-  allowedRole: 'student' | 'hiring_manager';
-}
-
-const RoleRoute: React.FC<RoleRouteProps> = ({ allowedRole }) => {
+const RoleRoute = ({ allowedRole }) => {
   const { user, isAuthenticated } = useAuth();
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;

@@ -4,15 +4,14 @@ import DashboardLayout from '../../components/layout/DashboardLayout';
 import { useAuth } from '../../context/AuthContext';
 import { applicationsApi } from '../../api/applications.api';
 import { jobsApi } from '../../api/jobs.api';
-import { Application, Job, StudentStats } from '../../types';
 import { Search, FileText, CheckCircle, XCircle, Clock, TrendingUp, Briefcase, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 
-const StudentDashboard: React.FC = () => {
+const StudentDashboard = () => {
   const { user } = useAuth();
-  const [stats, setStats] = useState<StudentStats | null>(null);
-  const [recentApps, setRecentApps] = useState<Application[]>([]);
-  const [recentJobs, setRecentJobs] = useState<Job[]>([]);
+  const [stats, setStats] = useState(null);
+  const [recentApps, setRecentApps] = useState([]);
+  const [recentJobs, setRecentJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,8 +34,8 @@ const StudentDashboard: React.FC = () => {
     fetchData();
   }, []);
 
-  const statusBadge = (status: string) => {
-    const map: Record<string, string> = {
+  const statusBadge = (status) => {
+    const map = {
       pending: 'badge-yellow',
       reviewed: 'badge-blue',
       shortlisted: 'badge-green',
@@ -45,17 +44,17 @@ const StudentDashboard: React.FC = () => {
     return <span className={map[status] || 'badge-gray'}>{status}</span>;
   };
 
-  const getAppJobTitle = (app: Application): string => {
+  const getAppJobTitle = (app) => {
     if (app.jobSource === 'internal') {
-      const j = app.jobId as Job;
+      const j = app.jobId;
       return j?.title || 'N/A';
     }
     return app.externalJobData?.title || 'External Job';
   };
 
-  const getAppCompany = (app: Application): string => {
+  const getAppCompany = (app) => {
     if (app.jobSource === 'internal') {
-      const j = app.jobId as Job;
+      const j = app.jobId;
       return j?.company || 'N/A';
     }
     return app.externalJobData?.company || '—';

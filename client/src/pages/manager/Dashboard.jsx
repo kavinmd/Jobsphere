@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { useAuth } from '../../context/AuthContext';
 import { jobsApi } from '../../api/jobs.api';
-import { ManagerStats, Job } from '../../types';
 import { Briefcase, Users, PlusCircle, ArrowRight, TrendingUp, Clock, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 
-const ManagerDashboard: React.FC = () => {
+const ManagerDashboard = () => {
   const { user } = useAuth();
-  const [stats, setStats] = useState<ManagerStats | null>(null);
-  const [recentJobs, setRecentJobs] = useState<Job[]>([]);
+  const [stats, setStats] = useState(null);
+  const [recentJobs, setRecentJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -142,7 +141,7 @@ const ManagerDashboard: React.FC = () => {
                         {job.status}
                       </span>
                     </td>
-                    <td className="text-white/70">{(job as any).applicationCount || 0}</td>
+                    <td className="text-white/70">{job.applicationCount || 0}</td>
                     <td className="text-white/50 text-xs">{format(new Date(job.createdAt), 'MMM d, yyyy')}</td>
                     <td>
                       <Link

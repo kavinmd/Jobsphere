@@ -4,16 +4,13 @@ import Modal from '../../components/ui/Modal';
 import { scraperApi } from '../../api/scraper.api';
 import { jobsApi } from '../../api/jobs.api';
 import { applicationsApi } from '../../api/applications.api';
-import { ScrapedJob, Job } from '../../types';
 import toast from 'react-hot-toast';
 import {
   Search, MapPin, ExternalLink, Briefcase, Building2,
-  Send, Loader2, Filter, X, ChevronDown
+  Send, Loader2, ChevronDown
 } from 'lucide-react';
 
-type TabType = 'internal' | 'external';
-
-const SOURCE_COLORS: Record<string, { bg: string; text: string; label: string }> = {
+const SOURCE_COLORS = {
   linkedin: { bg: 'rgba(10,102,194,0.2)', text: '#60a5fa', label: 'LinkedIn' },
   naukri: { bg: 'rgba(234,88,12,0.2)', text: '#fb923c', label: 'Naukri' },
   internshala: { bg: 'rgba(34,197,94,0.2)', text: '#4ade80', label: 'Internshala' },
@@ -21,30 +18,30 @@ const SOURCE_COLORS: Record<string, { bg: string; text: string; label: string }>
   internal: { bg: 'rgba(97,114,244,0.2)', text: '#a5b8fc', label: 'Internal' },
 };
 
-const JobSearch: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('internal');
+const JobSearch = () => {
+  const [activeTab, setActiveTab] = useState('internal');
   const [keyword, setKeyword] = useState('');
   const [location, setLocation] = useState('');
   const [jobType, setJobType] = useState('');
 
   // Internal jobs state
-  const [internalJobs, setInternalJobs] = useState<Job[]>([]);
+  const [internalJobs, setInternalJobs] = useState([]);
   const [internalLoading, setInternalLoading] = useState(false);
   const [internalLoaded, setInternalLoaded] = useState(false);
 
   // External jobs state
-  const [scrapedJobs, setScrapedJobs] = useState<ScrapedJob[]>([]);
+  const [scrapedJobs, setScrapedJobs] = useState([]);
   const [scrapeLoading, setScrapeLoading] = useState(false);
 
   // Apply modal
-  const [applyModal, setApplyModal] = useState<{ open: boolean; job: Job | ScrapedJob | null; type: 'internal' | 'external' }>({
+  const [applyModal, setApplyModal] = useState({
     open: false, job: null, type: 'internal'
   });
   const [coverLetter, setCoverLetter] = useState('');
   const [applying, setApplying] = useState(false);
 
   // Job detail modal
-  const [detailModal, setDetailModal] = useState<{ open: boolean; job: Job | null }>({ open: false, job: null });
+  const [detailModal, setDetailModal] = useState({ open: false, job: null });
 
   const searchInternal = async () => {
     setInternalLoading(true);
@@ -88,7 +85,7 @@ const JobSearch: React.FC = () => {
     else searchExternal();
   };
 
-  const openApplyModal = (job: Job | ScrapedJob, type: 'internal' | 'external') => {
+  const openApplyModal = (job, type) => {
     setApplyModal({ open: true, job, type });
     setCoverLetter('');
   };
@@ -97,12 +94,12 @@ const JobSearch: React.FC = () => {
     if (!applyModal.job) return;
     setApplying(true);
     try {
-      let payload: any;
+      let payload;
       if (applyModal.type === 'internal') {
-        const j = applyModal.job as Job;
+        const j = applyModal.job;
         payload = { jobId: j._id, jobSource: 'internal', coverLetter };
       } else {
-        const j = applyModal.job as ScrapedJob;
+        const j = applyModal.job;
         payload = {
           jobSource: j.source,
           externalJobData: {
@@ -122,15 +119,15 @@ const JobSearch: React.FC = () => {
         toast.success('Application submitted! ✅');
         setApplyModal({ open: false, job: null, type: 'internal' });
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to apply');
     } finally {
       setApplying(false);
     }
   };
 
-  const getTitle = (job: Job | ScrapedJob) => ('title' in job ? job.title : '');
-  const getCompany = (job: Job | ScrapedJob) => ('company' in job ? job.company : '');
+  const getTitle = (job) => (job?.title || '');
+  const getCompany = (job) => (job?.company || '');
 
   return (
     <DashboardLayout>
@@ -466,8 +463,9 @@ const JobSearch: React.FC = () => {
             )}
             <button
               onClick={() => {
+                const j = detailModal.job;
                 setDetailModal({ open: false, job: null });
-                openApplyModal(detailModal.job!, 'internal');
+                openApplyModal(j, 'internal');
               }}
               className="btn-primary w-full"
             >

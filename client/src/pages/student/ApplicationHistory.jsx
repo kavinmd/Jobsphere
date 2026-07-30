@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { applicationsApi } from '../../api/applications.api';
-import { Application, Job } from '../../types';
 import { FileText, Clock, CheckCircle, XCircle, Eye, MapPin, Building2 } from 'lucide-react';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 
-const STATUS_CONFIG: Record<string, { label: string; badge: string; icon: React.ElementType; color: string }> = {
+const STATUS_CONFIG = {
   pending: { label: 'Pending', badge: 'badge-yellow', icon: Clock, color: '#f59e0b' },
   reviewed: { label: 'Reviewed', badge: 'badge-blue', icon: Eye, color: '#6172f4' },
   shortlisted: { label: 'Shortlisted', badge: 'badge-green', icon: CheckCircle, color: '#22c55e' },
   rejected: { label: 'Rejected', badge: 'badge-red', icon: XCircle, color: '#ef4444' },
 };
 
-const SOURCE_LABELS: Record<string, string> = {
+const SOURCE_LABELS = {
   internal: '🏢 Internal',
   linkedin: '💼 LinkedIn',
   naukri: '🔵 Naukri',
@@ -21,10 +20,10 @@ const SOURCE_LABELS: Record<string, string> = {
   unstop: '🟣 Unstop',
 };
 
-const ApplicationHistory: React.FC = () => {
-  const [applications, setApplications] = useState<Application[]>([]);
+const ApplicationHistory = () => {
+  const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<string>('all');
+  const [filter, setFilter] = useState('all');
 
   useEffect(() => {
     const fetch = async () => {
@@ -40,18 +39,18 @@ const ApplicationHistory: React.FC = () => {
     fetch();
   }, []);
 
-  const getJobTitle = (app: Application) => {
-    if (app.jobSource === 'internal') return (app.jobId as Job)?.title || 'Job (Deleted)';
+  const getJobTitle = (app) => {
+    if (app.jobSource === 'internal') return app.jobId?.title || 'Job (Deleted)';
     return app.externalJobData?.title || 'External Job';
   };
 
-  const getCompany = (app: Application) => {
-    if (app.jobSource === 'internal') return (app.jobId as Job)?.company || '—';
+  const getCompany = (app) => {
+    if (app.jobSource === 'internal') return app.jobId?.company || '—';
     return app.externalJobData?.company || '—';
   };
 
-  const getLocation = (app: Application) => {
-    if (app.jobSource === 'internal') return (app.jobId as Job)?.location || '—';
+  const getLocation = (app) => {
+    if (app.jobSource === 'internal') return app.jobId?.location || '—';
     return app.externalJobData?.location || '—';
   };
 
@@ -85,7 +84,7 @@ const ApplicationHistory: React.FC = () => {
       {/* Status Filter Pills */}
       <div className="flex flex-wrap gap-2 mb-6">
         {['all', 'pending', 'reviewed', 'shortlisted', 'rejected'].map(status => {
-          const count = statCounts[status as keyof typeof statCounts];
+          const count = statCounts[status];
           const cfg = status !== 'all' ? STATUS_CONFIG[status] : null;
           const isActive = filter === status;
           return (
@@ -149,8 +148,8 @@ const ApplicationHistory: React.FC = () => {
 
                     <div className="flex items-center gap-3 mt-3">
                       <span className="badge-gray text-xs">{SOURCE_LABELS[app.jobSource] || app.jobSource}</span>
-                      {app.jobSource === 'internal' && (app.jobId as Job)?.type && (
-                        <span className="badge-blue text-xs">{(app.jobId as Job).type}</span>
+                      {app.jobSource === 'internal' && app.jobId?.type && (
+                        <span className="badge-blue text-xs">{app.jobId.type}</span>
                       )}
                       {app.externalJobData?.applyUrl && (
                         <a

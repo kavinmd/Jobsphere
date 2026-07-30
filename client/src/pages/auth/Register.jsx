@@ -3,16 +3,16 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { authApi } from '../../api/auth.api';
 import toast from 'react-hot-toast';
-import { Zap, Mail, Lock, User, Building2, MapPin, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Zap, Mail, Lock, User, Building2, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
-const Register: React.FC = () => {
+const Register = () => {
   const [searchParams] = useSearchParams();
   const [form, setForm] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'student' as 'student' | 'hiring_manager',
+    role: 'student',
     company: '',
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -27,11 +27,11 @@ const Register: React.FC = () => {
     }
   }, [searchParams]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (form.password !== form.confirmPassword) {
@@ -65,7 +65,7 @@ const Register: React.FC = () => {
         const redirect = res.data.user.role === 'hiring_manager' ? '/manager/dashboard' : '/student/dashboard';
         navigate(redirect);
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);

@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { useAuth } from '../../context/AuthContext';
 import { usersApi } from '../../api/users.api';
-import { User } from '../../types';
 import toast from 'react-hot-toast';
-import { User as UserIcon, Mail, Phone, MapPin, FileText, Building2, Lock, Save, Loader2 } from 'lucide-react';
+import { User as UserIcon, Phone, MapPin, FileText, Building2, Lock, Save, Loader2 } from 'lucide-react';
 
-const Profile: React.FC = () => {
+const Profile = () => {
   const { user, updateUser, isManager } = useAuth();
-  const [form, setForm] = useState<Partial<User>>({});
+  const [form, setForm] = useState({});
   const [pwForm, setPwForm] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
   const [saving, setSaving] = useState(false);
   const [pwSaving, setPwSaving] = useState(false);
@@ -38,7 +37,7 @@ const Profile: React.FC = () => {
     fetch();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -50,14 +49,14 @@ const Profile: React.FC = () => {
         updateUser(res.data.user);
         toast.success('Profile updated successfully! ✅');
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to update profile');
     } finally {
       setSaving(false);
     }
   };
 
-  const handlePasswordChange = async (e: React.FormEvent) => {
+  const handlePasswordChange = async (e) => {
     e.preventDefault();
     if (pwForm.newPassword !== pwForm.confirmPassword) {
       toast.error('New passwords do not match');
@@ -77,7 +76,7 @@ const Profile: React.FC = () => {
         toast.success('Password changed successfully!');
         setPwForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to change password');
     } finally {
       setPwSaving(false);

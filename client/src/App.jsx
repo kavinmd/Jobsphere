@@ -23,7 +23,7 @@ import EditJob from './pages/manager/EditJob';
 import ApplicantTracker from './pages/manager/ApplicantTracker';
 import ManagerProfile from './pages/manager/Profile';
 
-const App: React.FC = () => {
+const App = () => {
   const { isAuthenticated, isStudent, isManager } = useAuth();
 
   return (

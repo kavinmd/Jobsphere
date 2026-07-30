@@ -8,13 +8,12 @@ import {
   User,
   Briefcase,
   PlusCircle,
-  Users,
   LogOut,
   Zap,
   ChevronRight,
 } from 'lucide-react';
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
   const { user, logout, isStudent, isManager } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -104,12 +103,12 @@ const Sidebar: React.FC = () => {
           className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200"
           style={{ color: 'rgba(255,255,255,0.5)' }}
           onMouseEnter={e => {
-            (e.currentTarget as HTMLElement).style.background = 'rgba(239,68,68,0.1)';
-            (e.currentTarget as HTMLElement).style.color = '#fca5a5';
+            e.currentTarget.style.background = 'rgba(239,68,68,0.1)';
+            e.currentTarget.style.color = '#fca5a5';
           }}
           onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.background = 'transparent';
-            (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.5)';
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = 'rgba(255,255,255,0.5)';
           }}
         >
           <LogOut size={18} />

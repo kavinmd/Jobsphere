@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { jobsApi } from '../../api/jobs.api';
-import { Job } from '../../types';
 import toast from 'react-hot-toast';
 import { PlusCircle, Edit2, Trash2, Users, Briefcase, MapPin, AlertTriangle, Loader2, Eye, EyeOff } from 'lucide-react';
 import { format } from 'date-fns';
 import Modal from '../../components/ui/Modal';
 
-const MyJobs: React.FC = () => {
-  const [jobs, setJobs] = useState<Job[]>([]);
+const MyJobs = () => {
+  const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [deleteModal, setDeleteModal] = useState<{ open: boolean; job: Job | null }>({ open: false, job: null });
+  const [deleteModal, setDeleteModal] = useState({ open: false, job: null });
   const [deleting, setDeleting] = useState(false);
-  const [statusUpdating, setStatusUpdating] = useState<string | null>(null);
+  const [statusUpdating, setStatusUpdating] = useState(null);
   const navigate = useNavigate();
 
   const fetchJobs = async () => {
@@ -37,21 +36,21 @@ const MyJobs: React.FC = () => {
       toast.success('Job deleted successfully');
       setDeleteModal({ open: false, job: null });
       fetchJobs();
-    } catch (err: any) {
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to delete');
     } finally {
       setDeleting(false);
     }
   };
 
-  const toggleStatus = async (job: Job) => {
+  const toggleStatus = async (job) => {
     setStatusUpdating(job._id);
     try {
       const newStatus = job.status === 'open' ? 'closed' : 'open';
       await jobsApi.updateJob(job._id, { status: newStatus });
       toast.success(`Job ${newStatus === 'open' ? 'reopened' : 'closed'}`);
       fetchJobs();
-    } catch (err: any) {
+    } catch (err) {
       toast.error('Failed to update status');
     } finally {
       setStatusUpdating(null);
@@ -122,7 +121,7 @@ const MyJobs: React.FC = () => {
 
                 {/* Applicant count */}
                 <div className="text-center flex-shrink-0">
-                  <div className="text-2xl font-black gradient-text">{(job as any).applicationCount || 0}</div>
+                  <div className="text-2xl font-black gradient-text">{job.applicationCount || 0}</div>
                   <div className="text-white/40 text-xs">applicants</div>
                 </div>
               </div>

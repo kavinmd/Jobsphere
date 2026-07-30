@@ -6,7 +6,7 @@ import {
   ArrowRight, Star, CheckCircle, Globe
 } from 'lucide-react';
 
-const Landing: React.FC = () => {
+const Landing = () => {
   const { isAuthenticated, isStudent, isManager } = useAuth();
 
   const dashboardLink = isManager ? '/manager/dashboard' : '/student/dashboard';

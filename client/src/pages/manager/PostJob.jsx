@@ -7,7 +7,7 @@ import { Briefcase, MapPin, Building2, DollarSign, FileText, List, ChevronDown, 
 
 const JOB_TYPES = ['full-time', 'part-time', 'internship', 'contract', 'remote'];
 
-const PostJob: React.FC = () => {
+const PostJob = () => {
   const [form, setForm] = useState({
     title: '',
     company: '',
@@ -20,11 +20,11 @@ const PostJob: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.title || !form.company || !form.location || !form.description || !form.type) {
       toast.error('Please fill in all required fields');
@@ -38,7 +38,7 @@ const PostJob: React.FC = () => {
         toast.success('Job posted successfully! 🎉');
         navigate('/manager/jobs');
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to post job');
     } finally {
       setLoading(false);

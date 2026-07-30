@@ -7,8 +7,8 @@ import { Briefcase, MapPin, Building2, DollarSign, FileText, List, ChevronDown, 
 
 const JOB_TYPES = ['full-time', 'part-time', 'internship', 'contract', 'remote'];
 
-const EditJob: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+const EditJob = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     title: '',
@@ -26,7 +26,7 @@ const EditJob: React.FC = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await jobsApi.getJobById(id!);
+        const res = await jobsApi.getJobById(id);
         if (res.success && res.data) {
           const job = res.data.job;
           setForm({
@@ -50,20 +50,20 @@ const EditJob: React.FC = () => {
     fetch();
   }, [id]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
     try {
-      const res = await jobsApi.updateJob(id!, form);
+      const res = await jobsApi.updateJob(id, form);
       if (res.success) {
         toast.success('Job updated successfully! ✅');
         navigate('/manager/jobs');
       }
-    } catch (err: any) {
+    } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to update job');
     } finally {
       setSaving(false);
