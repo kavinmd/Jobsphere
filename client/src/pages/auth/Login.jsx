@@ -42,7 +42,7 @@ const Login = () => {
   const fillDemo = (role) => {
     setForm({
       email: role === 'student' ? 'student@jobsphere.com' : 'manager@jobsphere.com',
-      password: role === 'student' ? 'Student@123' : 'Manager@123',
+      password: role === 'student' ? 'StudentPass#2026' : 'ManagerPass#2026',
     });
   };
 
@@ -56,7 +56,7 @@ const Login = () => {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                 style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
+              style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
               <Zap size={20} className="text-white" />
             </div>
             <span className="text-white font-bold text-2xl">JobSphere</span>

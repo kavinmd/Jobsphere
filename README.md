@@ -161,10 +161,10 @@ npm run dev
 
 | Role | Email | Password | Access Level |
 |:---|:---|:---|:---|
-| 👔 **Hiring Manager** | `manager@jobsphere.com` | `Manager@123` | Full Employer & ATS Portal |
-| 🎓 **Student / Candidate** | `student@jobsphere.com` | `Student@123` | Candidate Search & Application Portal |
+| 👔 **Hiring Manager** | `manager@jobsphere.com` | `ManagerPass#2026` | Full Employer & ATS Portal |
+| 🎓 **Student / Candidate** | `student@jobsphere.com` | `StudentPass#2026` | Candidate Search & Application Portal |
 
-*Run `python seed.py` in `server/` to initialize demo accounts.*
+*Run `python seed.py` in `server/` to initialize or reset demo accounts.*
 
 ---
 

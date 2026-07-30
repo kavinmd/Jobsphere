@@ -4,7 +4,7 @@ import DashboardLayout from '../../components/layout/DashboardLayout';
 import { useAuth } from '../../context/AuthContext';
 import { jobsApi } from '../../api/jobs.api';
 import { Briefcase, Users, PlusCircle, ArrowRight, TrendingUp, Clock, CheckCircle } from 'lucide-react';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils/date';
 
 const ManagerDashboard = () => {
   const { user } = useAuth();
@@ -142,7 +142,7 @@ const ManagerDashboard = () => {
                       </span>
                     </td>
                     <td className="text-white/70">{job.applicationCount || 0}</td>
-                    <td className="text-white/50 text-xs">{format(new Date(job.createdAt), 'MMM d, yyyy')}</td>
+                    <td className="text-white/50 text-xs">{formatDate(job.createdAt, 'MMM d, yyyy')}</td>
                     <td>
                       <Link
                         to={`/manager/jobs/${job._id}/applicants`}

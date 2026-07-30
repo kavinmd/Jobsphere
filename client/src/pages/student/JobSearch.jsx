@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import Modal from '../../components/ui/Modal';
 import { scraperApi } from '../../api/scraper.api';
@@ -47,7 +47,12 @@ const JobSearch = () => {
     setInternalLoading(true);
     setInternalLoaded(false);
     try {
-      const res = await jobsApi.getAllJobs({ keyword, location, type: jobType || undefined });
+      const params = {};
+      if (keyword.trim()) params.keyword = keyword.trim();
+      if (location.trim()) params.location = location.trim();
+      if (jobType) params.type = jobType;
+
+      const res = await jobsApi.getAllJobs(params);
       if (res.success && res.data) {
         setInternalJobs(res.data.jobs);
         setInternalLoaded(true);
@@ -58,6 +63,10 @@ const JobSearch = () => {
       setInternalLoading(false);
     }
   };
+
+  useEffect(() => {
+    searchInternal();
+  }, []);
 
   const searchExternal = async () => {
     if (!keyword.trim()) {

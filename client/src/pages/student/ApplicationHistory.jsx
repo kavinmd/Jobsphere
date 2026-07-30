@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { applicationsApi } from '../../api/applications.api';
 import { FileText, Clock, CheckCircle, XCircle, Eye, MapPin, Building2 } from 'lucide-react';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils/date';
 import toast from 'react-hot-toast';
 
 const STATUS_CONFIG = {
@@ -141,7 +141,7 @@ const ApplicationHistory = () => {
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
                         <span className={cfg?.badge}>{cfg?.label}</span>
                         <span className="text-white/30 text-xs">
-                          {format(new Date(app.createdAt), 'MMM d, yyyy')}
+                          {formatDate(app.createdAt, 'MMM d, yyyy')}
                         </span>
                       </div>
                     </div>

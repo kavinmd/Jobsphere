@@ -9,7 +9,7 @@ from beanie.operators import In
 from app.models.job import Job
 from app.models.application import Application
 from app.models.user import User
-from app.middleware.auth import protect
+from app.middleware.auth import protect, optional_protect
 from app.middleware.role import authorize
 
 router = APIRouter(prefix="/api/jobs", tags=["Jobs"])
@@ -71,7 +71,7 @@ async def get_all_jobs(
     type: Optional[str] = Query(None),
     page: int = Query(1, ge=1),
     limit: int = Query(20, ge=1, le=100),
-    _: User = Depends(protect),
+    _: Optional[User] = Depends(optional_protect),
 ):
     query_filter = {"status": "open"}
     if keyword:
@@ -147,7 +147,7 @@ async def get_manager_stats(current_user: User = Depends(authorize("hiring_manag
 
 # GET /api/jobs/:id  — single job
 @router.get("/{job_id}")
-async def get_job_by_id(job_id: str, _: User = Depends(protect)):
+async def get_job_by_id(job_id: str, _: Optional[User] = Depends(optional_protect)):
     try:
         job = await Job.get(job_id)
     except Exception:

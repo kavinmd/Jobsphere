@@ -2,6 +2,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
+from typing import Optional
 import os
 from dotenv import load_dotenv
 from app.models.user import User
@@ -13,6 +14,7 @@ JWT_EXPIRES_IN = os.getenv("JWT_EXPIRES_IN", "7d")
 ALGORITHM = "HS256"
 
 bearer_scheme = HTTPBearer()
+optional_bearer_scheme = HTTPBearer(auto_error=False)
 
 
 def _parse_expires_in(expires_in: str) -> int:
@@ -42,13 +44,29 @@ async def protect(
         user_id: str = payload.get("id")
         if not user_id:
             raise credentials_exception
-    except JWTError:
+        user = await User.get(user_id)
+    except Exception:
         raise credentials_exception
 
-    user = await User.get(user_id)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User no longer exists.",
         )
     return user
+
+
+async def optional_protect(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(optional_bearer_scheme),
+) -> Optional[User]:
+    """FastAPI dependency — returns User if valid JWT present, otherwise None without throwing 401."""
+    if not credentials or not credentials.credentials:
+        return None
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[ALGORITHM])
+        user_id: str = payload.get("id")
+        if not user_id:
+            return None
+        return await User.get(user_id)
+    except Exception:
+        return None

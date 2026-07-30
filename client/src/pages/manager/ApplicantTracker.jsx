@@ -4,7 +4,7 @@ import DashboardLayout from '../../components/layout/DashboardLayout';
 import { applicationsApi } from '../../api/applications.api';
 import toast from 'react-hot-toast';
 import { Users, ArrowLeft, Mail, Phone, MapPin, FileText, ChevronDown, Loader2, ExternalLink, Clock, CheckCircle, Eye, XCircle } from 'lucide-react';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils/date';
 
 const STATUS_OPTIONS = [
   { value: 'pending', label: 'Pending', cls: 'badge-yellow' },
@@ -169,7 +169,7 @@ const ApplicantTracker = () => {
                       </div>
                       <div className="text-right flex-shrink-0">
                         <span className={statusCfg?.cls || 'badge-gray'}>{statusCfg?.label}</span>
-                        <p className="text-white/30 text-xs mt-1">{format(new Date(app.createdAt), 'MMM d, yyyy')}</p>
+                        <p className="text-white/30 text-xs mt-1">{formatDate(app.createdAt, 'MMM d, yyyy')}</p>
                       </div>
                     </div>
 

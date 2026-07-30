@@ -1,6 +1,5 @@
 """
-seed.py ? Populate MongoDB with test data.
-Mirrors the original seed.ts behavior.
+seed.py — Populate MongoDB with test data.
 
 Usage:
     cd server
@@ -27,18 +26,19 @@ async def seed():
     client = AsyncIOMotorClient(mongo_uri)
     db = client.get_default_database()
     await init_beanie(database=db, document_models=[User, Job, Application])
-    print("? Connected to MongoDB for seeding...")
+    print("[+] Connected to MongoDB for seeding...")
 
     # Clear existing data
     await User.delete_all()
     await Job.delete_all()
-    print("??  Cleared existing data")
+    await Application.delete_all()
+    print("[+] Cleared existing data")
 
-    # Create Hiring Manager
+    # Create 1 Hiring Manager
     manager = User(
         name="Ankit Kumar",
         email="manager@jobsphere.com",
-        password="Manager@123",
+        password="ManagerPass#2026",
         role="hiring_manager",
         company="JobSphere Tech Pvt. Ltd.",
         location="Bengaluru, Karnataka",
@@ -48,11 +48,11 @@ async def seed():
     manager.hash_password()
     await manager.insert()
 
-    # Create Student
+    # Create 1 Student
     student = User(
         name="Rahul Sharma",
         email="student@jobsphere.com",
-        password="Student@123",
+        password="StudentPass#2026",
         role="student",
         location="Delhi, India",
         bio="Final year CSE student passionate about full-stack development.",
@@ -83,7 +83,7 @@ async def seed():
             ),
             "requirements": ["React.js / Next.js", "Node.js / Express.js", "MongoDB / PostgreSQL",
                              "TypeScript", "Git & GitHub", "2+ years experience"],
-            "salary": "?8L - ?15L per annum",
+            "salary": "INR 8L - 15L per annum",
             "type": "full-time",
             "posted_by": str(manager.id),
             "source": "internal",
@@ -102,7 +102,7 @@ async def seed():
                 "- Integration with backend APIs"
             ),
             "requirements": ["React.js", "TypeScript", "Tailwind CSS", "REST API integration", "Responsive design"],
-            "salary": "?6L - ?10L per annum",
+            "salary": "INR 6L - 10L per annum",
             "type": "remote",
             "posted_by": str(manager.id),
             "source": "internal",
@@ -121,7 +121,7 @@ async def seed():
                 "- API documentation"
             ),
             "requirements": ["Python", "FastAPI", "MongoDB", "JWT Authentication", "Docker (nice to have)"],
-            "salary": "?7L - ?12L per annum",
+            "salary": "INR 7L - 12L per annum",
             "type": "full-time",
             "posted_by": str(manager.id),
             "source": "internal",
@@ -141,7 +141,7 @@ async def seed():
             ),
             "requirements": ["JavaScript / TypeScript", "React basics", "Any backend language",
                              "Final year student or fresher"],
-            "salary": "?20,000 - ?30,000/month",
+            "salary": "INR 20,000 - 30,000/month",
             "type": "internship",
             "posted_by": str(manager.id),
             "source": "internal",
@@ -164,18 +164,18 @@ async def seed():
         )
         await job.insert()
 
-    print("? Sample jobs created")
-    print("\n? Database seeded successfully!\n")
+    print("[+] Sample jobs created")
+    print("\n[+] Database seeded successfully!\n")
     print("Test Credentials:")
-    print("?" * 38)
-    print("? Hiring Manager:")
+    print("=" * 45)
+    print("Hiring Manager:")
     print("   Email: manager@jobsphere.com")
-    print("   Password: Manager@123")
+    print("   Password: ManagerPass#2026")
     print("")
-    print("? Student:")
+    print("Student:")
     print("   Email: student@jobsphere.com")
-    print("   Password: Student@123")
-    print("?" * 38 + "\n")
+    print("   Password: StudentPass#2026")
+    print("=" * 45 + "\n")
 
 
 if __name__ == "__main__":

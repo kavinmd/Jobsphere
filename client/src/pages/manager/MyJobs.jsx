@@ -4,7 +4,7 @@ import DashboardLayout from '../../components/layout/DashboardLayout';
 import { jobsApi } from '../../api/jobs.api';
 import toast from 'react-hot-toast';
 import { PlusCircle, Edit2, Trash2, Users, Briefcase, MapPin, AlertTriangle, Loader2, Eye, EyeOff } from 'lucide-react';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils/date';
 import Modal from '../../components/ui/Modal';
 
 const MyJobs = () => {
@@ -112,7 +112,7 @@ const MyJobs = () => {
                       <span className="badge-gray text-xs">💰 {job.salary}</span>
                     )}
                     <span className="text-white/30 text-xs">
-                      Posted {format(new Date(job.createdAt), 'MMM d, yyyy')}
+                      Posted {formatDate(job.createdAt, 'MMM d, yyyy')}
                     </span>
                   </div>
 
