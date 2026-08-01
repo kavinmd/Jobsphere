@@ -103,6 +103,7 @@ async def get_all_jobs(
 
 
 # GET /api/jobs/my  — manager's own jobs
+# NOTE: must be declared BEFORE /{job_id} to avoid FastAPI routing /my as a path param
 @router.get("/my")
 async def get_my_jobs(current_user: User = Depends(authorize("hiring_manager"))):
     jobs_raw = await Job.find(Job.posted_by == str(current_user.id)).sort("-created_at").to_list()
@@ -124,6 +125,7 @@ async def get_my_jobs(current_user: User = Depends(authorize("hiring_manager")))
 
 
 # GET /api/jobs/stats  — manager dashboard stats
+# NOTE: must be declared BEFORE /{job_id} to avoid FastAPI routing /stats as a path param
 @router.get("/stats")
 async def get_manager_stats(current_user: User = Depends(authorize("hiring_manager"))):
     manager_id = str(current_user.id)
@@ -146,6 +148,7 @@ async def get_manager_stats(current_user: User = Depends(authorize("hiring_manag
 
 
 # GET /api/jobs/:id  — single job
+# NOTE: dynamic path param route — must always be declared LAST among GET routes
 @router.get("/{job_id}")
 async def get_job_by_id(job_id: str, _: Optional[User] = Depends(optional_protect)):
     try:
