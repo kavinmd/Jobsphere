@@ -17,6 +17,14 @@ load_dotenv()
 CLIENT_URL = os.getenv("CLIENT_URL", "http://localhost:5173")
 PORT = int(os.getenv("PORT", 5000))
 
+# Support comma-separated origins in CLIENT_URL
+_extra_origins = [o.strip() for o in CLIENT_URL.split(",") if o.strip()]
+ALLOWED_ORIGINS = list(set([
+    *_extra_origins,
+    "http://localhost:5173",
+    "http://localhost:3000",
+]))
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -36,7 +44,7 @@ app = FastAPI(
 # ── CORS ───────────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[CLIENT_URL, "http://localhost:5173", "http://localhost:3000"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
