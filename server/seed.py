@@ -82,7 +82,7 @@ async def seed():
                 "- Learning & development budget"
             ),
             "requirements": ["React.js / Next.js", "Node.js / Express.js", "MongoDB / PostgreSQL",
-                             "TypeScript", "Git & GitHub", "2+ years experience"],
+                             "JavaScript", "Git & GitHub", "2+ years experience"],
             "salary": "INR 8L - 15L per annum",
             "type": "full-time",
             "posted_by": str(manager.id),
@@ -101,7 +101,7 @@ async def seed():
                 "- Performance optimization\n"
                 "- Integration with backend APIs"
             ),
-            "requirements": ["React.js", "TypeScript", "Tailwind CSS", "REST API integration", "Responsive design"],
+            "requirements": ["React.js", "JavaScript", "Tailwind CSS", "REST API integration", "Responsive design"],
             "salary": "INR 6L - 10L per annum",
             "type": "remote",
             "posted_by": str(manager.id),
@@ -139,7 +139,7 @@ async def seed():
                 "- Get hands-on with modern tech stack\n"
                 "- Possibility of full-time conversion"
             ),
-            "requirements": ["JavaScript / TypeScript", "React basics", "Any backend language",
+            "requirements": ["JavaScript", "React basics", "Any backend language",
                              "Final year student or fresher"],
             "salary": "INR 20,000 - 30,000/month",
             "type": "internship",

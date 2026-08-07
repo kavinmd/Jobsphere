@@ -80,22 +80,13 @@ Jobsphere/
 └── client/                   # Frontend React Application
     ├── index.html            # Entry HTML document
     ├── package.json          # Node dependencies & scripts
-<<<<<<< HEAD
     ├── vite.config.js        # Vite configuration & dev server options
-=======
-    ├── vite.config.ts        # Vite configuration & dev server options
->>>>>>> 5d9c4dfce679e0ab3af2409066c6567aa4ab45f5
     └── src/
         ├── api/              # Axios HTTP client instances & API methods
         ├── components/       # UI & Layout components
         ├── context/          # Auth state management
         ├── pages/            # Application views (Landing, Dashboard, Tracker)
-<<<<<<< HEAD
         └── routes/           # Protected routes & role guards
-=======
-        ├── routes/           # Protected routes & role guards
-        └── types/            # TypeScript interfaces & domain types
->>>>>>> 5d9c4dfce679e0ab3af2409066c6567aa4ab45f5
 ```
 
 ---
