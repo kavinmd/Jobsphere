@@ -10,7 +10,7 @@ timeout /t 2 >nul
 echo.
 echo Starting Backend (Python + FastAPI)...
 cd /d %~dp0server
-start cmd /k "python main.py"
+start cmd /k ".\venv\Scripts\python main.py"
 
 echo.
 echo ========================================

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 import {
   LayoutDashboard,
   Search,
@@ -11,10 +12,13 @@ import {
   LogOut,
   Zap,
   ChevronRight,
+  Sun,
+  Moon,
 } from 'lucide-react';
 
 const Sidebar = () => {
   const { user, logout, isStudent, isManager } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -44,7 +48,7 @@ const Sidebar = () => {
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-6 py-5 border-b border-white/10">
         <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
-          <Zap size={16} className="text-white" />
+          <Zap size={16} className="text-white-force" />
         </div>
         <div>
           <span className="text-white font-bold text-base">JobSphere</span>
@@ -57,7 +61,7 @@ const Sidebar = () => {
       {/* User Info */}
       <div className="mx-3 mt-4 mb-2 p-3 rounded-xl" style={{ background: 'rgba(97,114,244,0.08)', border: '1px solid rgba(97,114,244,0.15)' }}>
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white-force flex-shrink-0"
                style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
             {user?.name?.charAt(0).toUpperCase()}
           </div>
@@ -86,6 +90,27 @@ const Sidebar = () => {
         })}
       </nav>
 
+      {/* Theme Toggle */}
+      <div className="px-3 pb-2">
+        <button
+          onClick={toggleTheme}
+          className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 border"
+          style={{
+            background: 'var(--color-input-bg)',
+            borderColor: 'var(--color-card-border)',
+            color: 'var(--color-text)',
+          }}
+        >
+          <div className="flex items-center gap-3">
+            {theme === 'dark' ? <Moon size={18} className="text-primary-400" /> : <Sun size={18} className="text-amber-500" />}
+            <span>{theme === 'dark' ? 'Dark Mode' : 'Light Mode'}</span>
+          </div>
+          <div className="w-8 h-4 rounded-full relative transition-colors duration-200" style={{ background: theme === 'dark' ? '#6172f4' : 'rgba(15, 23, 42, 0.15)' }}>
+            <div className={`absolute top-0.5 w-3 h-3 rounded-full transition-all duration-200 ${theme === 'dark' ? 'right-0.5' : 'left-0.5'}`} style={{ backgroundColor: '#ffffff' }} />
+          </div>
+        </button>
+      </div>
+
       {/* Role Badge */}
       <div className="px-3 pb-2">
         <div className="px-4 py-2 rounded-lg text-center text-xs font-medium" 
@@ -97,18 +122,18 @@ const Sidebar = () => {
       </div>
 
       {/* Logout */}
-      <div className="p-3 border-t border-white/10">
+      <div className="p-3 border-t" style={{ borderColor: 'var(--color-card-border)' }}>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200"
-          style={{ color: 'rgba(255,255,255,0.5)' }}
+          className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer"
+          style={{ color: 'var(--color-logout-text)' }}
           onMouseEnter={e => {
-            e.currentTarget.style.background = 'rgba(239,68,68,0.1)';
-            e.currentTarget.style.color = '#fca5a5';
+            e.currentTarget.style.background = 'var(--color-logout-hover-bg)';
+            e.currentTarget.style.color = 'var(--color-logout-hover-text)';
           }}
           onMouseLeave={e => {
             e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.color = 'rgba(255,255,255,0.5)';
+            e.currentTarget.style.color = 'var(--color-logout-text)';
           }}
         >
           <LogOut size={18} />

@@ -83,7 +83,7 @@ const Register = () => {
           <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center"
                  style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
-              <Zap size={20} className="text-white" />
+              <Zap size={20} className="text-white-force" />
             </div>
             <span className="text-white font-bold text-2xl">JobSphere</span>
           </Link>
@@ -93,28 +93,28 @@ const Register = () => {
 
         <div className="section-card">
           {/* Role toggle */}
-          <div className="flex rounded-xl p-1 mb-6" style={{ background: 'rgba(255,255,255,0.05)' }}>
+          <div className="flex rounded-xl p-1 mb-6" style={{ background: 'var(--color-input-bg)', border: '1px solid var(--color-card-border)' }}>
             <button
               type="button"
               onClick={() => setForm(p => ({ ...p, role: 'student' }))}
-              className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
                 form.role === 'student'
                   ? 'text-white'
                   : 'text-white/50 hover:text-white/70'
               }`}
-              style={form.role === 'student' ? { background: 'linear-gradient(135deg, #6172f4, #f43f9a)' } : {}}
+              style={form.role === 'student' ? { background: 'linear-gradient(135deg, #6172f4, #f43f9a)', color: '#ffffff' } : {}}
             >
               🎓 Student
             </button>
             <button
               type="button"
               onClick={() => setForm(p => ({ ...p, role: 'hiring_manager' }))}
-              className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
                 form.role === 'hiring_manager'
                   ? 'text-white'
                   : 'text-white/50 hover:text-white/70'
               }`}
-              style={form.role === 'hiring_manager' ? { background: 'linear-gradient(135deg, #f43f9a, #e11d48)' } : {}}
+              style={form.role === 'hiring_manager' ? { background: 'linear-gradient(135deg, #f43f9a, #e11d48)', color: '#ffffff' } : {}}
             >
               👔 Hiring Manager
             </button>

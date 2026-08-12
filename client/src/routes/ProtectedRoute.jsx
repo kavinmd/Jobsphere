@@ -7,7 +7,7 @@ const ProtectedRoute = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0a0b1a' }}>
+      <div className="page-wrapper flex items-center justify-center">
         <div className="text-center">
           <div className="w-10 h-10 rounded-full border-2 border-primary-400 border-t-transparent spinner mx-auto mb-4" />
           <p className="text-white/50 text-sm">Loading...</p>

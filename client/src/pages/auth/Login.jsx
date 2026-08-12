@@ -57,7 +57,7 @@ const Login = () => {
           <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
-              <Zap size={20} className="text-white" />
+              <Zap size={20} className="text-white-force" />
             </div>
             <span className="text-white font-bold text-2xl">JobSphere</span>
           </Link>
@@ -70,18 +70,18 @@ const Login = () => {
           <button
             type="button"
             onClick={() => fillDemo('student')}
-            className="flex-1 text-xs py-2.5 rounded-xl font-medium transition-all border"
-            style={{ background: 'rgba(97,114,244,0.1)', borderColor: 'rgba(97,114,244,0.3)', color: '#a5b8fc' }}
+            className="flex-1 text-xs py-2.5 rounded-xl font-medium transition-all border cursor-pointer"
+            style={{ background: 'var(--color-demo-student-bg)', borderColor: 'var(--color-demo-student-border)', color: 'var(--color-demo-student-text)' }}
           >
-            🎓 Demo Student
+            🎓 Student
           </button>
           <button
             type="button"
             onClick={() => fillDemo('manager')}
-            className="flex-1 text-xs py-2.5 rounded-xl font-medium transition-all border"
-            style={{ background: 'rgba(244,63,154,0.1)', borderColor: 'rgba(244,63,154,0.3)', color: '#f9a8d4' }}
+            className="flex-1 text-xs py-2.5 rounded-xl font-medium transition-all border cursor-pointer"
+            style={{ background: 'var(--color-demo-manager-bg)', borderColor: 'var(--color-demo-manager-border)', color: 'var(--color-demo-manager-text)' }}
           >
-            👔 Demo Manager
+            👔 Manager
           </button>
         </div>
 

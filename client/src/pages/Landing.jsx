@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import {
   Search, Briefcase, Users, Shield, Zap, TrendingUp,
-  ArrowRight, Star, CheckCircle, Globe
+  ArrowRight, Star, CheckCircle, Globe, Sun, Moon
 } from 'lucide-react';
 
 const Landing = () => {
   const { isAuthenticated, isStudent, isManager } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   const dashboardLink = isManager ? '/manager/dashboard' : '/student/dashboard';
 
@@ -68,11 +70,24 @@ const Landing = () => {
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center"
                style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
-            <Zap size={18} className="text-white" />
+            <Zap size={18} className="text-white-force" />
           </div>
           <span className="text-white font-bold text-xl">JobSphere</span>
         </div>
         <div className="flex items-center gap-3">
+          <button
+            onClick={toggleTheme}
+            className="p-2.5 rounded-xl border transition-all duration-200 hover:bg-white/10 flex items-center justify-center cursor-pointer"
+            style={{
+              background: 'var(--color-input-bg)',
+              borderColor: 'var(--color-card-border)',
+              color: 'var(--color-text)',
+            }}
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {theme === 'dark' ? <Moon size={18} className="text-primary-400" /> : <Sun size={18} className="text-amber-500" />}
+          </button>
+
           {isAuthenticated ? (
             <Link to={dashboardLink} className="btn-primary">
               Go to Dashboard <ArrowRight size={16} />
