@@ -56,7 +56,7 @@ const Login = () => {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
+              style={{ background: 'linear-gradient(135deg, #2563eb, #06b6d4)' }}>
               <Zap size={20} className="text-white-force" />
             </div>
             <span className="text-white font-bold text-2xl">JobSphere</span>

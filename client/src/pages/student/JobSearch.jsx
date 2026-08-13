@@ -15,7 +15,7 @@ const SOURCE_COLORS = {
   naukri: { bg: 'rgba(234,88,12,0.2)', text: '#fb923c', label: 'Naukri' },
   internshala: { bg: 'rgba(34,197,94,0.2)', text: '#4ade80', label: 'Internshala' },
   unstop: { bg: 'rgba(168,85,247,0.2)', text: '#c084fc', label: 'Unstop' },
-  internal: { bg: 'rgba(97,114,244,0.2)', text: '#a5b8fc', label: 'Internal' },
+  internal: { bg: 'rgba(37,99,235,0.2)', text: '#93c5fd', label: 'Internal' },
 };
 
 const JobSearch = () => {
@@ -152,7 +152,7 @@ const JobSearch = () => {
           className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
             activeTab === 'internal' ? 'text-white' : 'text-white/50 hover:text-white/70'
           }`}
-          style={activeTab === 'internal' ? { background: 'linear-gradient(135deg, #6172f4, #f43f9a)' } : {}}
+          style={activeTab === 'internal' ? { background: 'linear-gradient(135deg, #2563eb, #06b6d4)' } : {}}
         >
           🏢 Internal Jobs
         </button>
@@ -161,7 +161,7 @@ const JobSearch = () => {
           className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
             activeTab === 'external' ? 'text-white' : 'text-white/50 hover:text-white/70'
           }`}
-          style={activeTab === 'external' ? { background: 'linear-gradient(135deg, #6172f4, #f43f9a)' } : {}}
+          style={activeTab === 'external' ? { background: 'linear-gradient(135deg, #2563eb, #06b6d4)' } : {}}
         >
           🌐 Scrape External
         </button>
@@ -396,7 +396,7 @@ const JobSearch = () => {
       >
         {applyModal.job && (
           <div>
-            <div className="p-4 rounded-xl mb-5" style={{ background: 'rgba(97,114,244,0.1)', border: '1px solid rgba(97,114,244,0.2)' }}>
+            <div className="p-4 rounded-xl mb-5" style={{ background: 'rgba(37,99,235,0.1)', border: '1px solid rgba(37,99,235,0.2)' }}>
               <p className="text-white font-semibold">{getTitle(applyModal.job)}</p>
               <p className="text-white/60 text-sm">{getCompany(applyModal.job)}</p>
             </div>

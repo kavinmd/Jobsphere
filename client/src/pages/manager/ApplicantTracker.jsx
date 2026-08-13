@@ -140,7 +140,7 @@ const ApplicantTracker = () => {
                 <div className="flex items-start gap-4">
                   {/* Avatar */}
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-lg font-black text-white flex-shrink-0"
-                       style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
+                       style={{ background: 'linear-gradient(135deg, #2563eb, #06b6d4)' }}>
                     {student?.name?.charAt(0).toUpperCase() || '?'}
                   </div>
 

@@ -18,13 +18,13 @@ const Landing = () => {
       icon: Search,
       title: 'Smart Job Search',
       desc: 'Search across LinkedIn, Naukri, Internshala, and Unstop in one place.',
-      color: '#6172f4',
+      color: '#2563eb',
     },
     {
       icon: Shield,
       title: 'Role-Based Access',
       desc: 'Secure RBAC ensures students and managers only see what they need.',
-      color: '#f43f9a',
+      color: '#06b6d4',
     },
     {
       icon: Briefcase,
@@ -69,7 +69,7 @@ const Landing = () => {
       <nav className="relative z-10 flex items-center justify-between px-6 lg:px-16 py-5 border-b border-white/5">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-               style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
+               style={{ background: 'linear-gradient(135deg, #2563eb, #06b6d4)' }}>
             <Zap size={18} className="text-white-force" />
           </div>
           <span className="text-white font-bold text-xl">JobSphere</span>
@@ -104,7 +104,7 @@ const Landing = () => {
       {/* Hero Section */}
       <section className="relative z-10 text-center px-6 py-24 lg:py-32">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-semibold"
-             style={{ background: 'rgba(97,114,244,0.15)', border: '1px solid rgba(97,114,244,0.3)', color: '#a5b8fc' }}>
+             style={{ background: 'rgba(37,99,235,0.15)', border: '1px solid rgba(37,99,235,0.3)', color: '#93c5fd' }}>
           <Star size={12} fill="currentColor" />
           Full-Stack Job Search & Application Platform
         </div>
@@ -175,9 +175,9 @@ const Landing = () => {
       <section className="relative z-10 px-6 lg:px-16 pb-24">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Student card */}
-          <div className="section-card relative overflow-hidden" style={{ borderColor: 'rgba(97,114,244,0.3)' }}>
+          <div className="section-card relative overflow-hidden" style={{ borderColor: 'rgba(37,99,235,0.3)' }}>
             <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-20"
-                 style={{ background: '#6172f4', transform: 'translate(30%, -30%)' }} />
+                 style={{ background: '#2563eb', transform: 'translate(30%, -30%)' }} />
             <div className="text-4xl mb-4">🎓</div>
             <h3 className="text-white font-bold text-xl mb-3">For Students</h3>
             <ul className="space-y-2.5 text-white/60 text-sm">
@@ -199,9 +199,9 @@ const Landing = () => {
           </div>
 
           {/* Manager card */}
-          <div className="section-card relative overflow-hidden" style={{ borderColor: 'rgba(244,63,154,0.3)' }}>
+          <div className="section-card relative overflow-hidden" style={{ borderColor: 'rgba(6,182,212,0.3)' }}>
             <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-20"
-                 style={{ background: '#f43f9a', transform: 'translate(30%, -30%)' }} />
+                 style={{ background: '#06b6d4', transform: 'translate(30%, -30%)' }} />
             <div className="text-4xl mb-4">👔</div>
             <h3 className="text-white font-bold text-xl mb-3">For Hiring Managers</h3>
             <ul className="space-y-2.5 text-white/60 text-sm">
@@ -212,13 +212,13 @@ const Landing = () => {
                 'Update application statuses',
               ].map(item => (
                 <li key={item} className="flex items-start gap-2">
-                  <CheckCircle size={14} className="text-pink-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle size={14} className="text-cyan-400 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
             </ul>
             <Link to="/register?role=hiring_manager" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white transition-all duration-200 cursor-pointer mt-6 w-full"
-                  style={{ background: 'linear-gradient(135deg, #f43f9a, #e11d48)' }}>
+                  style={{ background: 'linear-gradient(135deg, #06b6d4, #0891b2)' }}>
               Register as Manager
             </Link>
           </div>

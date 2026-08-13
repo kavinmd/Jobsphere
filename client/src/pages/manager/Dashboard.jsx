@@ -54,9 +54,9 @@ const ManagerDashboard = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Total Jobs', value: stats?.totalJobs || 0, icon: Briefcase, color: '#6172f4' },
+          { label: 'Total Jobs', value: stats?.totalJobs || 0, icon: Briefcase, color: '#2563eb' },
           { label: 'Open Jobs', value: stats?.openJobs || 0, icon: CheckCircle, color: '#22c55e' },
-          { label: 'Total Applicants', value: stats?.totalApplicants || 0, icon: Users, color: '#f43f9a' },
+          { label: 'Total Applicants', value: stats?.totalApplicants || 0, icon: Users, color: '#06b6d4' },
           { label: 'Pending Review', value: stats?.pendingApplicants || 0, icon: Clock, color: '#f59e0b' },
         ].map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="stat-card">
@@ -75,7 +75,7 @@ const ManagerDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <Link to="/manager/jobs/new" className="section-card hover:border-primary-500/40 transition-all group flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-               style={{ background: 'rgba(97,114,244,0.15)' }}>
+               style={{ background: 'rgba(37,99,235,0.15)' }}>
             <PlusCircle size={22} className="text-primary-400" />
           </div>
           <div>
@@ -85,16 +85,16 @@ const ManagerDashboard = () => {
           <ArrowRight size={18} className="text-white/30 ml-auto group-hover:text-primary-400 transition-colors" />
         </Link>
 
-        <Link to="/manager/jobs" className="section-card hover:border-pink-500/40 transition-all group flex items-center gap-4">
+        <Link to="/manager/jobs" className="section-card hover:border-cyan-500/40 transition-all group flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-               style={{ background: 'rgba(244,63,154,0.1)' }}>
-            <TrendingUp size={22} className="text-pink-400" />
+               style={{ background: 'rgba(6,182,212,0.1)' }}>
+            <TrendingUp size={22} className="text-cyan-400" />
           </div>
           <div>
             <p className="text-white font-semibold">Manage Jobs</p>
             <p className="text-white/50 text-sm">Edit, close, or delete postings</p>
           </div>
-          <ArrowRight size={18} className="text-white/30 ml-auto group-hover:text-pink-400 transition-colors" />
+          <ArrowRight size={18} className="text-white/30 ml-auto group-hover:text-cyan-400 transition-colors" />
         </Link>
       </div>
 

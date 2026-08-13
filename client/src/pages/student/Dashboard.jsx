@@ -83,7 +83,7 @@ const StudentDashboard = () => {
       {/* Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Total Applied', value: stats?.total || 0, icon: FileText, color: '#6172f4' },
+          { label: 'Total Applied', value: stats?.total || 0, icon: FileText, color: '#2563eb' },
           { label: 'Pending', value: stats?.pending || 0, icon: Clock, color: '#f59e0b' },
           { label: 'Shortlisted', value: stats?.shortlisted || 0, icon: CheckCircle, color: '#22c55e' },
           { label: 'Rejected', value: stats?.rejected || 0, icon: XCircle, color: '#ef4444' },
@@ -153,11 +153,11 @@ const StudentDashboard = () => {
               {recentJobs.map(job => (
                 <div key={job._id} className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                       style={{ background: 'rgba(97,114,244,0.15)' }}>
+                       style={{ background: 'rgba(37,99,235,0.15)' }}>
                     <Briefcase size={16} className="text-primary-400" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-white text-sm font-medium truncate">{job.title}</p>
+                    <p className="text-white text-sm font-semibold truncate">{job.title}</p>
                     <p className="text-white/40 text-xs">{job.company} · {job.location}</p>
                   </div>
                   <span className="badge-blue text-xs flex-shrink-0">{job.type}</span>
@@ -172,7 +172,7 @@ const StudentDashboard = () => {
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
         <Link to="/student/search" className="section-card hover:border-primary-500/40 transition-all group flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-               style={{ background: 'rgba(97,114,244,0.15)' }}>
+               style={{ background: 'rgba(37,99,235,0.15)' }}>
             <Search size={22} className="text-primary-400" />
           </div>
           <div>

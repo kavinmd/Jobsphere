@@ -104,7 +104,7 @@ const Profile = () => {
         {/* Avatar & Info Card */}
         <div className="section-card text-center lg:col-span-1">
           <div className="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-black text-white mx-auto mb-4"
-               style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
+               style={{ background: 'linear-gradient(135deg, #2563eb, #06b6d4)' }}>
             {user?.name?.charAt(0).toUpperCase()}
           </div>
           <h2 className="text-white font-bold text-xl mb-1">{user?.name}</h2>

@@ -82,7 +82,7 @@ const Register = () => {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                 style={{ background: 'linear-gradient(135deg, #6172f4, #f43f9a)' }}>
+                 style={{ background: 'linear-gradient(135deg, #2563eb, #06b6d4)' }}>
               <Zap size={20} className="text-white-force" />
             </div>
             <span className="text-white font-bold text-2xl">JobSphere</span>
@@ -102,7 +102,7 @@ const Register = () => {
                   ? 'text-white'
                   : 'text-white/50 hover:text-white/70'
               }`}
-              style={form.role === 'student' ? { background: 'linear-gradient(135deg, #6172f4, #f43f9a)', color: '#ffffff' } : {}}
+              style={form.role === 'student' ? { background: 'linear-gradient(135deg, #2563eb, #06b6d4)', color: '#ffffff' } : {}}
             >
               🎓 Student
             </button>
@@ -114,7 +114,7 @@ const Register = () => {
                   ? 'text-white'
                   : 'text-white/50 hover:text-white/70'
               }`}
-              style={form.role === 'hiring_manager' ? { background: 'linear-gradient(135deg, #f43f9a, #e11d48)', color: '#ffffff' } : {}}
+              style={form.role === 'hiring_manager' ? { background: 'linear-gradient(135deg, #06b6d4, #0891b2)', color: '#ffffff' } : {}}
             >
               👔 Hiring Manager
             </button>

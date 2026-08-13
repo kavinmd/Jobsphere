@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 const STATUS_CONFIG = {
   pending: { label: 'Pending', badge: 'badge-yellow', icon: Clock, color: '#f59e0b' },
-  reviewed: { label: 'Reviewed', badge: 'badge-blue', icon: Eye, color: '#6172f4' },
+  reviewed: { label: 'Reviewed', badge: 'badge-blue', icon: Eye, color: '#2563eb' },
   shortlisted: { label: 'Shortlisted', badge: 'badge-green', icon: CheckCircle, color: '#22c55e' },
   rejected: { label: 'Rejected', badge: 'badge-red', icon: XCircle, color: '#ef4444' },
 };
@@ -96,7 +96,7 @@ const ApplicationHistory = () => {
                   ? 'text-white border-primary-500/50'
                   : 'text-white/50 border-white/10 hover:border-white/20 hover:text-white/70'
               }`}
-              style={isActive ? { background: 'linear-gradient(135deg, rgba(97,114,244,0.2), rgba(244,63,154,0.1))' } : {}}
+              style={isActive ? { background: 'linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.1))' } : {}}
             >
               {cfg && <cfg.icon size={13} style={{ color: isActive ? cfg.color : undefined }} />}
               <span className="capitalize">{status}</span>
