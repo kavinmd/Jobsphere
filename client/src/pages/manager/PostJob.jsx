@@ -52,7 +52,7 @@ const PostJob = () => {
         <p className="text-white/50">Fill in the details to create a new job posting</p>
       </div>
 
-      <div className="max-w-3xl">
+      <div className="w-full">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Info */}
           <div className="section-card space-y-5">
@@ -60,7 +60,7 @@ const PostJob = () => {
               <Briefcase size={18} className="text-primary-400" /> Basic Information
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-white/70 mb-2">
                   Job Title <span className="text-red-400">*</span>
@@ -136,7 +136,7 @@ const PostJob = () => {
                 </div>
               </div>
 
-              <div className="md:col-span-2">
+              <div className="lg:col-span-2">
                 <label className="block text-sm font-medium text-white/70 mb-2">
                   Salary / Compensation <span className="text-white/30">(optional)</span>
                 </label>
@@ -155,49 +155,50 @@ const PostJob = () => {
             </div>
           </div>
 
-          {/* Description */}
-          <div className="section-card space-y-4">
-            <h2 className="text-white font-semibold flex items-center gap-2">
-              <FileText size={18} className="text-primary-400" /> Job Description
-            </h2>
-
-            <div>
-              <label className="block text-sm font-medium text-white/70 mb-2">
-                Description <span className="text-red-400">*</span>
-              </label>
-              <textarea
-                id="job-description"
-                name="description"
-                value={form.description}
-                onChange={handleChange}
-                rows={8}
-                placeholder="Describe the role, responsibilities, what you offer, team culture..."
-                className="input-field resize-none"
-                required
-              />
+          {/* Description + Requirements side by side on large screens */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Description */}
+            <div className="section-card space-y-4">
+              <h2 className="text-white font-semibold flex items-center gap-2">
+                <FileText size={18} className="text-primary-400" /> Job Description
+              </h2>
+              <div>
+                <label className="block text-sm font-medium text-white/70 mb-2">
+                  Description <span className="text-red-400">*</span>
+                </label>
+                <textarea
+                  id="job-description"
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                  rows={10}
+                  placeholder="Describe the role, responsibilities, what you offer, team culture..."
+                  className="input-field resize-none"
+                  required
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Requirements */}
-          <div className="section-card space-y-4">
-            <h2 className="text-white font-semibold flex items-center gap-2">
-              <List size={18} className="text-primary-400" /> Requirements
-            </h2>
-
-            <div>
-              <label className="block text-sm font-medium text-white/70 mb-2">
-                Skills / Requirements <span className="text-white/30">(one per line)</span>
-              </label>
-              <textarea
-                id="job-requirements"
-                name="requirements"
-                value={form.requirements}
-                onChange={handleChange}
-                rows={5}
-                placeholder="React.js&#10;Node.js&#10;TypeScript&#10;2+ years experience"
-                className="input-field resize-none"
-              />
-              <p className="text-white/30 text-xs mt-1">Enter each requirement on a new line</p>
+            {/* Requirements */}
+            <div className="section-card space-y-4">
+              <h2 className="text-white font-semibold flex items-center gap-2">
+                <List size={18} className="text-primary-400" /> Requirements
+              </h2>
+              <div>
+                <label className="block text-sm font-medium text-white/70 mb-2">
+                  Skills / Requirements <span className="text-white/30">(one per line)</span>
+                </label>
+                <textarea
+                  id="job-requirements"
+                  name="requirements"
+                  value={form.requirements}
+                  onChange={handleChange}
+                  rows={10}
+                  placeholder={"React.js\nNode.js\nTypeScript\n2+ years experience"}
+                  className="input-field resize-none"
+                />
+                <p className="text-white/30 text-xs mt-1">Enter each requirement on a new line</p>
+              </div>
             </div>
           </div>
 
