@@ -15,4 +15,9 @@ export const usersApi = {
     const res = await api.put('/users/change-password', data);
     return res.data;
   },
+
+  forceResetPassword: async (newPassword) => {
+    const res = await api.put('/users/force-reset-password', { newPassword });
+    return res.data;
+  },
 };

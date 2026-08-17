@@ -4,41 +4,47 @@
 
 @layer base {
   :root {
-    /* Professional Lite Color Palette (Default) */
-    --color-bg: #f8fafc;
-    --color-bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%);
-    --color-text: #0f172a;
-    --color-text-secondary: #475569;
-    --color-text-muted: #64748b;
-    
+    /* ── Professional White Light Theme (Hiring Platform) ── */
+    --color-bg: #f5f7fa;
+    --color-bg-gradient: linear-gradient(145deg, #ffffff 0%, #f0f4f8 40%, #eef2f7 100%);
+    --color-text: #111827;
+    --color-text-secondary: #374151;
+    --color-text-muted: #6b7280;
+
     --color-card-bg: #ffffff;
-    --color-card-border: rgba(15, 23, 42, 0.08);
-    --color-sidebar-bg: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-    --color-sidebar-border: rgba(15, 23, 42, 0.08);
-    
+    --color-card-border: rgba(17, 24, 39, 0.07);
+    --color-card-shadow: 0 1px 3px rgba(17, 24, 39, 0.06), 0 4px 16px rgba(17, 24, 39, 0.04);
+    --color-sidebar-bg: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+    --color-sidebar-border: rgba(17, 24, 39, 0.07);
+
     --color-input-bg: #ffffff;
-    --color-input-border: #cbd5e1;
-    --color-input-text: #0f172a;
-    
-    --color-table-header-text: #475569;
-    --color-table-row-hover: rgba(37, 99, 235, 0.04);
+    --color-input-border: #d1d5db;
+    --color-input-text: #111827;
+
+    --color-table-header-text: #6b7280;
+    --color-table-row-hover: rgba(37, 99, 235, 0.03);
     --color-modal-bg: #ffffff;
-    --color-modal-backdrop: rgba(15, 23, 42, 0.4);
-    
-    --color-demo-student-bg: rgba(37, 99, 235, 0.08);
-    --color-demo-student-border: rgba(37, 99, 235, 0.25);
+    --color-modal-backdrop: rgba(17, 24, 39, 0.35);
+
+    --color-demo-student-bg: rgba(37, 99, 235, 0.06);
+    --color-demo-student-border: rgba(37, 99, 235, 0.2);
     --color-demo-student-text: #1d4ed8;
-    --color-demo-manager-bg: rgba(6, 182, 212, 0.08);
-    --color-demo-manager-border: rgba(6, 182, 212, 0.25);
+    --color-demo-manager-bg: rgba(6, 182, 212, 0.06);
+    --color-demo-manager-border: rgba(6, 182, 212, 0.2);
     --color-demo-manager-text: #0891b2;
 
-    --color-logout-text: #64748b;
-    --color-logout-hover-bg: rgba(239, 68, 68, 0.08);
+    --color-logout-text: #6b7280;
+    --color-logout-hover-bg: rgba(239, 68, 68, 0.06);
     --color-logout-hover-text: #dc2626;
 
-    --color-scrollbar-track: #f1f5f9;
-    --color-scrollbar-thumb: #cbd5e1;
-    --color-scrollbar-thumb-hover: #94a3b8;
+    --color-scrollbar-track: #f3f4f6;
+    --color-scrollbar-thumb: #d1d5db;
+    --color-scrollbar-thumb-hover: #9ca3af;
+
+    /* Hero badge — light blue tint on white */
+    --color-hero-badge-bg: rgba(37, 99, 235, 0.07);
+    --color-hero-badge-border: rgba(37, 99, 235, 0.18);
+    --color-hero-badge-text: #1d4ed8;
   }
 
   .dark {
@@ -95,6 +101,7 @@
     color: var(--color-text);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
@@ -132,6 +139,7 @@
     @apply backdrop-blur-md border;
     border-color: var(--color-card-border);
     background: var(--color-card-bg);
+    box-shadow: var(--color-card-shadow, none);
   }
 
   .glass-card-light {
@@ -230,8 +238,9 @@
     @apply rounded-2xl p-6 border;
     border-color: var(--color-card-border);
     background: var(--color-card-bg);
+    box-shadow: var(--color-card-shadow, none);
     backdrop-filter: blur(12px);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   /* Badge */
@@ -319,87 +328,91 @@
   color: #ffffff !important;
 }
 
-/* Light Mode Overrides for Tailwind Utility Classes */
-:root:not(.dark) .text-white:not(.btn-primary, .btn-danger, .badge, .badge-blue, .badge-green, .badge-yellow, .badge-red, .badge-purple, .badge-pink, .badge-gray, .text-white-force, .text-white-force *, .btn-primary *, .btn-danger *) {
-  color: #0f172a !important; /* Force deep slate text in light mode */
+/* ═══════════════════════════════════════════════════════════
+   Light Mode Overrides — translate all dark-coded Tailwind
+   classes into professional white-theme equivalents.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Text overrides ── */
+:root:not(.dark) .text-white:not(
+  .btn-primary, .btn-danger, .badge,
+  .badge-blue, .badge-green, .badge-yellow,
+  .badge-red, .badge-purple, .badge-pink, .badge-gray,
+  .text-white-force, .text-white-force *,
+  .btn-primary *, .btn-danger *
+) {
+  color: #111827 !important;
 }
-:root:not(.dark) .text-white\/70:not(.badge, .text-white-force *) {
-  color: #334155 !important;
+:root:not(.dark) .text-white\/80:not(.badge, .text-white-force *) { color: #1f2937 !important; }
+:root:not(.dark) .text-white\/70:not(.badge, .text-white-force *) { color: #374151 !important; }
+:root:not(.dark) .text-white\/60:not(.badge, .text-white-force *) { color: #4b5563 !important; }
+:root:not(.dark) .text-white\/50:not(.badge, .text-white-force *) { color: #6b7280 !important; }
+:root:not(.dark) .text-white\/40:not(.badge, .text-white-force *) { color: #9ca3af !important; }
+:root:not(.dark) .text-white\/30:not(.badge, .text-white-force *) { color: #9ca3af !important; }
+:root:not(.dark) .text-white\/20:not(.badge, .text-white-force *) { color: #d1d5db !important; }
+
+/* ── Border overrides ── */
+:root:not(.dark) .border-white\/5:not(.text-white-force *)  { border-color: rgba(17, 24, 39, 0.05) !important; }
+:root:not(.dark) .border-white\/10:not(.text-white-force *) { border-color: rgba(17, 24, 39, 0.08) !important; }
+:root:not(.dark) .border-white\/20:not(.text-white-force *) { border-color: rgba(17, 24, 39, 0.12) !important; }
+:root:not(.dark) .border-white\/30:not(.text-white-force *) { border-color: rgba(17, 24, 39, 0.15) !important; }
+
+/* ── Background overrides ── */
+:root:not(.dark) .bg-white\/5:not(.text-white-force *)  { background-color: rgba(17, 24, 39, 0.03) !important; }
+:root:not(.dark) .bg-white\/10:not(.text-white-force *) { background-color: rgba(17, 24, 39, 0.05) !important; }
+:root:not(.dark) .bg-white\/20:not(.text-white-force *) { background-color: rgba(17, 24, 39, 0.08) !important; }
+
+/* ── Hover overrides ── */
+:root:not(.dark) .hover\:bg-white\/5:hover  { background-color: rgba(17, 24, 39, 0.03) !important; }
+:root:not(.dark) .hover\:bg-white\/10:hover { background-color: rgba(17, 24, 39, 0.05) !important; }
+:root:not(.dark) .hover\:text-white:hover   { color: #111827 !important; }
+
+/* ── Orb tint in light mode — very subtle ── */
+:root:not(.dark) .orb-1 {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.07) 0%, transparent 70%);
 }
-:root:not(.dark) .text-white\/60:not(.badge, .text-white-force *) {
-  color: #475569 !important;
-}
-:root:not(.dark) .text-white\/50:not(.badge, .text-white-force *) {
-  color: #475569 !important;
-}
-:root:not(.dark) .text-white\/40:not(.badge, .text-white-force *) {
-  color: #64748b !important;
-}
-:root:not(.dark) .text-white\/30:not(.badge, .text-white-force *) {
-  color: #94a3b8 !important;
-}
-:root:not(.dark) .text-white\/20:not(.badge, .text-white-force *) {
-  color: #cbd5e1 !important;
+:root:not(.dark) .orb-2 {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
 }
 
-:root:not(.dark) .border-white\/5:not(.text-white-force *) {
-  border-color: rgba(15, 23, 42, 0.05) !important;
-}
-:root:not(.dark) .border-white\/10:not(.text-white-force *) {
-  border-color: rgba(15, 23, 42, 0.08) !important;
-}
-:root:not(.dark) .border-white\/20:not(.text-white-force *) {
-  border-color: rgba(15, 23, 42, 0.15) !important;
-}
-
-:root:not(.dark) .bg-white\/5:not(.text-white-force *) {
-  background-color: rgba(15, 23, 42, 0.04) !important;
-}
-:root:not(.dark) .bg-white\/10:not(.text-white-force *) {
-  background-color: rgba(15, 23, 42, 0.08) !important;
-}
-:root:not(.dark) .bg-white\/20:not(.text-white-force *) {
-  background-color: rgba(15, 23, 42, 0.12) !important;
-}
-
-:root:not(.dark) .hover\:bg-white\/5:hover {
-  background-color: rgba(15, 23, 42, 0.04) !important;
-}
-:root:not(.dark) .hover\:text-white:hover {
-  color: #0f172a !important;
+/* ── Hero badge light-mode tint ── */
+:root:not(.dark) .hero-badge {
+  background: var(--color-hero-badge-bg) !important;
+  border-color: var(--color-hero-badge-border) !important;
+  color: var(--color-hero-badge-text) !important;
 }
 
 /* Animated gradient background orbs */
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  animation: float 8s ease-in-out infinite;
+  filter: blur(100px);
+  animation: float 10s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
 
 .orb-1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
-  top: -100px;
-  left: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 70%);
+  top: -150px;
+  left: -150px;
   animation-delay: 0s;
 }
 
 .orb-2 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
-  bottom: -50px;
-  right: -50px;
-  animation-delay: 4s;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.09) 0%, transparent 70%);
+  bottom: -80px;
+  right: -80px;
+  animation-delay: 5s;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-30px) scale(1.05); }
+  50% { transform: translateY(-25px) scale(1.04); }
 }
 
 /* Table styles */

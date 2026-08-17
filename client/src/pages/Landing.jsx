@@ -103,7 +103,7 @@ const Landing = () => {
 
       {/* Hero Section */}
       <section className="relative z-10 text-center px-6 py-24 lg:py-32">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-semibold"
+        <div className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-semibold"
              style={{ background: 'rgba(37,99,235,0.15)', border: '1px solid rgba(37,99,235,0.3)', color: '#93c5fd' }}>
           <Star size={12} fill="currentColor" />
           Full-Stack Job Search & Application Platform

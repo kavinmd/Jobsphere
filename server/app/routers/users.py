@@ -26,6 +26,10 @@ class ChangePasswordRequest(BaseModel):
     newPassword: str
 
 
+class ForceResetPasswordRequest(BaseModel):
+    newPassword: str
+
+
 # ── Routes ─────────────────────────────────────────────────────────────────────
 
 # GET /api/users/profile
@@ -80,3 +84,21 @@ async def change_password(
     await current_user.save()
 
     return {"success": True, "message": "Password changed successfully."}
+
+
+# PUT /api/users/force-reset-password
+# The user is already authenticated via JWT — no current password needed.
+@router.put("/force-reset-password")
+async def force_reset_password(
+    body: ForceResetPasswordRequest,
+    current_user: User = Depends(protect),
+):
+    if len(body.newPassword) < 6:
+        raise HTTPException(400, "New password must be at least 6 characters.")
+
+    current_user.password = body.newPassword
+    current_user.hash_password()
+    current_user.updated_at = datetime.utcnow()
+    await current_user.save()
+
+    return {"success": True, "message": "Password reset successfully."}

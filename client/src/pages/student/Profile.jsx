@@ -3,7 +3,7 @@ import DashboardLayout from '../../components/layout/DashboardLayout';
 import { useAuth } from '../../context/AuthContext';
 import { usersApi } from '../../api/users.api';
 import toast from 'react-hot-toast';
-import { User as UserIcon, Phone, MapPin, FileText, Building2, Lock, Save, Loader2 } from 'lucide-react';
+import { User as UserIcon, Phone, MapPin, FileText, Building2, Lock, Save, Loader2, AlertCircle, KeyRound, ShieldCheck, RefreshCw } from 'lucide-react';
 
 const Profile = () => {
   const { user, updateUser, isManager } = useAuth();
@@ -12,6 +12,7 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
   const [pwSaving, setPwSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [forgotMode, setForgotMode] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -78,6 +79,31 @@ const Profile = () => {
       }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to change password');
+    } finally {
+      setPwSaving(false);
+    }
+  };
+
+  const handleForceReset = async (e) => {
+    e.preventDefault();
+    if (pwForm.newPassword !== pwForm.confirmPassword) {
+      toast.error('New passwords do not match');
+      return;
+    }
+    if (pwForm.newPassword.length < 6) {
+      toast.error('New password must be at least 6 characters');
+      return;
+    }
+    setPwSaving(true);
+    try {
+      const res = await usersApi.forceResetPassword(pwForm.newPassword);
+      if (res.success) {
+        toast.success('Password reset successfully! 🔐');
+        setPwForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+        setForgotMode(false);
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to reset password');
     } finally {
       setPwSaving(false);
     }
@@ -243,60 +269,145 @@ const Profile = () => {
 
         {/* Change Password */}
         <div className="section-card lg:col-span-3">
-          <h2 className="text-white font-semibold text-lg mb-5 flex items-center gap-2">
-            <Lock size={18} className="text-primary-400" /> Change Password
-          </h2>
+          {/* Header row */}
+          <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+            <h2 className="text-white font-semibold text-lg flex items-center gap-2">
+              {forgotMode
+                ? <><KeyRound size={18} className="text-amber-500" /> Reset Password</>
+                : <><Lock size={18} className="text-primary-400" /> Change Password</>}
+            </h2>
+            <button
+              type="button"
+              onClick={() => {
+                setForgotMode(f => !f);
+                setPwForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+              }}
+              className="text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer"
+              style={{ color: forgotMode ? 'var(--color-text-muted)' : '#f59e0b' }}
+            >
+              {forgotMode
+                ? <><Lock size={12} /> I remember my password</>  
+                : <><AlertCircle size={12} /> Forgot current password?</>}
+            </button>
+          </div>
 
-          <form onSubmit={handlePasswordChange} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-white/70 mb-2">Current Password</label>
-              <input
-                id="current-password"
-                type="password"
-                value={pwForm.currentPassword}
-                onChange={e => setPwForm(p => ({ ...p, currentPassword: e.target.value }))}
-                className="input-field"
-                placeholder="••••••••"
-                required
-              />
+          {/* Info banner in forgot mode */}
+          {forgotMode && (
+            <div className="flex items-start gap-3 rounded-xl px-4 py-3 mb-5 text-sm"
+                 style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.25)' }}>
+              <ShieldCheck size={16} className="mt-0.5 flex-shrink-0" style={{ color: '#f59e0b' }} />
+              <div style={{ color: 'var(--color-text-secondary)' }}>
+                <span className="font-semibold" style={{ color: '#d97706' }}>You're already verified.</span>{' '}
+                Since you're logged in, your identity is confirmed by your session token —
+                you can set a new password directly without the old one.
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-white/70 mb-2">New Password</label>
-              <input
-                id="new-password"
-                type="password"
-                value={pwForm.newPassword}
-                onChange={e => setPwForm(p => ({ ...p, newPassword: e.target.value }))}
-                className="input-field"
-                placeholder="Min. 6 characters"
-                required
-                minLength={6}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-white/70 mb-2">Confirm New Password</label>
-              <input
-                id="confirm-new-password"
-                type="password"
-                value={pwForm.confirmPassword}
-                onChange={e => setPwForm(p => ({ ...p, confirmPassword: e.target.value }))}
-                className="input-field"
-                placeholder="••••••••"
-                required
-              />
-            </div>
-            <div className="md:col-span-3">
-              <button
-                id="change-password-submit"
-                type="submit"
-                disabled={pwSaving}
-                className="btn-secondary"
-              >
-                {pwSaving ? <Loader2 size={16} className="spinner" /> : <Lock size={16} />}
-                {pwSaving ? 'Changing...' : 'Change Password'}
-              </button>
-            </div>
-          </form>
+          )}
+
+          {forgotMode ? (
+            /* ── FORGOT MODE: no current password needed ── */
+            <form onSubmit={handleForceReset} className="grid grid-cols-1 md:grid-cols-2 gap-4" autoComplete="off">
+              <div>
+                <label className="block text-sm font-medium text-white/70 mb-2">New Password</label>
+                <input
+                  id="force-new-password"
+                  name="forceNewPassword"
+                  type="password"
+                  value={pwForm.newPassword}
+                  onChange={e => setPwForm(p => ({ ...p, newPassword: e.target.value }))}
+                  className="input-field"
+                  placeholder="Min. 6 characters"
+                  autoComplete="new-password"
+                  required
+                  minLength={6}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-white/70 mb-2">Confirm New Password</label>
+                <input
+                  id="force-confirm-password"
+                  name="forceConfirmPassword"
+                  type="password"
+                  value={pwForm.confirmPassword}
+                  onChange={e => setPwForm(p => ({ ...p, confirmPassword: e.target.value }))}
+                  className="input-field"
+                  placeholder="Re-enter new password"
+                  autoComplete="new-password"
+                  required
+                />
+              </div>
+              <div className="md:col-span-2">
+                <button
+                  id="force-reset-submit"
+                  type="submit"
+                  disabled={pwSaving}
+                  className="btn-primary"
+                  style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)' }}
+                >
+                  {pwSaving ? <Loader2 size={16} className="spinner" /> : <RefreshCw size={16} />}
+                  {pwSaving ? 'Resetting...' : 'Reset Password'}
+                </button>
+              </div>
+            </form>
+          ) : (
+            /* ── NORMAL MODE: verify current password ── */
+            <form onSubmit={handlePasswordChange} className="grid grid-cols-1 md:grid-cols-3 gap-4" autoComplete="off">
+              <div>
+                <label className="block text-sm font-medium text-white/70 mb-2">Current Password</label>
+                <input
+                  id="current-password"
+                  name="currentPassword"
+                  type="password"
+                  value={pwForm.currentPassword}
+                  onChange={e => setPwForm(p => ({ ...p, currentPassword: e.target.value }))}
+                  className="input-field"
+                  placeholder="Enter current password"
+                  autoComplete="current-password"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-white/70 mb-2">New Password</label>
+                <input
+                  id="new-password"
+                  name="newPassword"
+                  type="password"
+                  value={pwForm.newPassword}
+                  onChange={e => setPwForm(p => ({ ...p, newPassword: e.target.value }))}
+                  className="input-field"
+                  placeholder="Min. 6 characters"
+                  autoComplete="new-password"
+                  required
+                  minLength={6}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-white/70 mb-2">Confirm New Password</label>
+                <input
+                  id="confirm-new-password"
+                  name="confirmPassword"
+                  type="password"
+                  value={pwForm.confirmPassword}
+                  onChange={e => setPwForm(p => ({ ...p, confirmPassword: e.target.value }))}
+                  className="input-field"
+                  placeholder="Re-enter new password"
+                  autoComplete="new-password"
+                  required
+                />
+              </div>
+              <div className="md:col-span-3">
+                <button
+                  id="change-password-submit"
+                  type="submit"
+                  disabled={pwSaving}
+                  className="btn-secondary"
+                >
+                  {pwSaving ? <Loader2 size={16} className="spinner" /> : <Lock size={16} />}
+                  {pwSaving ? 'Changing...' : 'Change Password'}
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </DashboardLayout>
