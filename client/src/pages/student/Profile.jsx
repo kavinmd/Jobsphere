@@ -269,27 +269,12 @@ const Profile = () => {
 
         {/* Change Password */}
         <div className="section-card lg:col-span-3">
-          {/* Header row */}
-          <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
-            <h2 className="text-white font-semibold text-lg flex items-center gap-2">
-              {forgotMode
-                ? <><KeyRound size={18} className="text-amber-500" /> Reset Password</>
-                : <><Lock size={18} className="text-primary-400" /> Change Password</>}
-            </h2>
-            <button
-              type="button"
-              onClick={() => {
-                setForgotMode(f => !f);
-                setPwForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
-              }}
-              className="text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer"
-              style={{ color: forgotMode ? 'var(--color-text-muted)' : '#f59e0b' }}
-            >
-              {forgotMode
-                ? <><Lock size={12} /> I remember my password</>  
-                : <><AlertCircle size={12} /> Forgot current password?</>}
-            </button>
-          </div>
+          {/* Header */}
+          <h2 className="text-white font-semibold text-lg mb-5 flex items-center gap-2">
+            {forgotMode
+              ? <><KeyRound size={18} className="text-amber-500" /> Reset Password</>
+              : <><Lock size={18} className="text-primary-400" /> Change Password</>}
+          </h2>
 
           {/* Info banner in forgot mode */}
           {forgotMode && (
@@ -308,7 +293,21 @@ const Profile = () => {
             /* ── FORGOT MODE: no current password needed ── */
             <form onSubmit={handleForceReset} className="grid grid-cols-1 md:grid-cols-2 gap-4" autoComplete="off">
               <div>
-                <label className="block text-sm font-medium text-white/70 mb-2">New Password</label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-sm font-medium text-white/70" htmlFor="force-new-password">New Password</label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setForgotMode(false);
+                      setPwForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+                    }}
+                    className="text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer"
+                    style={{ color: 'var(--color-text-muted)' }}
+                  >
+                    <Lock size={11} />
+                    I remember my password
+                  </button>
+                </div>
                 <input
                   id="force-new-password"
                   name="forceNewPassword"
@@ -353,7 +352,21 @@ const Profile = () => {
             /* ── NORMAL MODE: verify current password ── */
             <form onSubmit={handlePasswordChange} className="grid grid-cols-1 md:grid-cols-3 gap-4" autoComplete="off">
               <div>
-                <label className="block text-sm font-medium text-white/70 mb-2">Current Password</label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-sm font-medium text-white/70" htmlFor="current-password">Current Password</label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setForgotMode(true);
+                      setPwForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+                    }}
+                    className="text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer"
+                    style={{ color: '#f59e0b' }}
+                  >
+                    <AlertCircle size={11} />
+                    Forgot current password?
+                  </button>
+                </div>
                 <input
                   id="current-password"
                   name="currentPassword"
