@@ -123,7 +123,7 @@ const EditJob = () => {
                 <label className="block text-sm font-medium text-white/70 mb-2">Job Type</label>
                 <div className="relative">
                   <select name="type" value={form.type} onChange={handleChange} className="input-field appearance-none pr-8">
-                    {JOB_TYPES.map(t => <option key={t} value={t} className="bg-gray-900">{t.charAt(0).toUpperCase() + t.slice(1).replace('-', ' ')}</option>)}
+                    {JOB_TYPES.map(t => <option key={t} value={t} style={{ background: 'var(--color-modal-bg)', color: 'var(--color-text)' }}>{t.charAt(0).toUpperCase() + t.slice(1).replace('-', ' ')}</option>)}
                   </select>
                   <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
                 </div>
@@ -133,8 +133,8 @@ const EditJob = () => {
                 <label className="block text-sm font-medium text-white/70 mb-2">Status</label>
                 <div className="relative">
                   <select name="status" value={form.status} onChange={handleChange} className="input-field appearance-none pr-8">
-                    <option value="open" className="bg-gray-900">Open</option>
-                    <option value="closed" className="bg-gray-900">Closed</option>
+                    <option value="open" style={{ background: 'var(--color-modal-bg)', color: 'var(--color-text)' }}>Open</option>
+                    <option value="closed" style={{ background: 'var(--color-modal-bg)', color: 'var(--color-text)' }}>Closed</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
                 </div>

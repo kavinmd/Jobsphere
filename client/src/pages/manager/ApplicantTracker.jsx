@@ -207,11 +207,11 @@ const ApplicantTracker = () => {
                             value={app.status}
                             onChange={e => handleStatusChange(app._id, e.target.value)}
                             disabled={updatingId === app._id}
-                            className="text-xs px-3 py-1.5 rounded-lg border border-white/15 appearance-none pr-6 cursor-pointer transition-all"
-                            style={{ background: 'rgba(255,255,255,0.05)', color: '#e2e8f0' }}
+                            className="text-xs px-3 py-1.5 rounded-lg border appearance-none pr-6 cursor-pointer transition-all"
+                            style={{ background: 'var(--color-input-bg)', color: 'var(--color-text)', borderColor: 'var(--color-card-border)' }}
                           >
                             {STATUS_OPTIONS.map(opt => (
-                              <option key={opt.value} value={opt.value} className="bg-gray-900">{opt.label}</option>
+                              <option key={opt.value} value={opt.value} style={{ background: 'var(--color-modal-bg)', color: 'var(--color-text)' }}>{opt.label}</option>
                             ))}
                           </select>
                           {updatingId === app._id ? (

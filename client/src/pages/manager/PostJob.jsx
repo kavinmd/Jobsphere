@@ -129,7 +129,7 @@ const PostJob = () => {
                     required
                   >
                     {JOB_TYPES.map(t => (
-                      <option key={t} value={t} className="bg-gray-900">{t.charAt(0).toUpperCase() + t.slice(1).replace('-', ' ')}</option>
+                      <option key={t} value={t} style={{ background: 'var(--color-modal-bg)', color: 'var(--color-text)' }}>{t.charAt(0).toUpperCase() + t.slice(1).replace('-', ' ')}</option>
                     ))}
                   </select>
                   <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
