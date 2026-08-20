@@ -72,13 +72,7 @@ const StudentDashboard = () => {
 
   return (
     <DashboardLayout>
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-1">
-          Good day, <span className="gradient-text">{user?.name?.split(' ')[0]}</span> 👋
-        </h1>
-        <p className="text-white/50">Here's your job search overview</p>
-      </div>
+
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

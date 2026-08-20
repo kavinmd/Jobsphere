@@ -42,14 +42,6 @@ const ManagerDashboard = () => {
 
   return (
     <DashboardLayout>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-1">
-          Welcome, <span className="gradient-text">{user?.name?.split(' ')[0]}</span> 👋
-        </h1>
-        <p className="text-white/50">
-          {user?.company ? `Managing jobs for ${user.company}` : 'Your hiring dashboard'}
-        </p>
-      </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

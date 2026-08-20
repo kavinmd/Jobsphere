@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
 import {
   LayoutDashboard,
   Search,
@@ -10,15 +9,12 @@ import {
   Briefcase,
   PlusCircle,
   LogOut,
-  Zap,
   ChevronRight,
-  Sun,
-  Moon,
 } from 'lucide-react';
 
+
 const Sidebar = () => {
-  const { user, logout, isStudent, isManager } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { logout, isStudent, isManager } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -45,32 +41,6 @@ const Sidebar = () => {
 
   return (
     <aside className="sidebar flex flex-col">
-      {/* Logo */}
-      <div className="flex items-center gap-2.5 px-6 py-5 border-b border-white/10">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #2563eb, #06b6d4)' }}>
-          <Zap size={16} className="text-white-force" />
-        </div>
-        <div>
-          <span className="text-white font-bold text-base">JobSphere</span>
-          <p className="text-xs text-white/40 leading-none">
-            {isManager ? 'Hiring Manager' : 'Student Portal'}
-          </p>
-        </div>
-      </div>
-
-      {/* User Info */}
-      <div className="mx-3 mt-4 mb-2 p-3 rounded-xl" style={{ background: 'rgba(37,99,235,0.08)', border: '1px solid rgba(37,99,235,0.15)' }}>
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white-force flex-shrink-0"
-               style={{ background: 'linear-gradient(135deg, #2563eb, #06b6d4)' }}>
-            {user?.name?.charAt(0).toUpperCase()}
-          </div>
-          <div className="min-w-0">
-            <p className="text-white text-sm font-semibold truncate">{user?.name}</p>
-            <p className="text-white/40 text-xs truncate">{user?.email}</p>
-          </div>
-        </div>
-      </div>
 
       {/* Navigation Links */}
       <nav className="flex-1 py-3 space-y-1">
@@ -90,50 +60,19 @@ const Sidebar = () => {
         })}
       </nav>
 
-      {/* Theme Toggle */}
-      <div className="px-3 pb-2">
-        <button
-          onClick={toggleTheme}
-          className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 border"
-          style={{
-            background: 'var(--color-input-bg)',
-            borderColor: 'var(--color-card-border)',
-            color: 'var(--color-text)',
-          }}
-        >
-          <div className="flex items-center gap-3">
-            {theme === 'dark' ? <Moon size={18} className="text-primary-400" /> : <Sun size={18} className="text-amber-500" />}
-            <span>{theme === 'dark' ? 'Dark Mode' : 'Light Mode'}</span>
-          </div>
-          <div className="w-8 h-4 rounded-full relative transition-colors duration-200" style={{ background: theme === 'dark' ? '#2563eb' : 'rgba(15, 23, 42, 0.15)' }}>
-            <div className={`absolute top-0.5 w-3 h-3 rounded-full transition-all duration-200 ${theme === 'dark' ? 'right-0.5' : 'left-0.5'}`} style={{ backgroundColor: '#ffffff' }} />
-          </div>
-        </button>
-      </div>
-
-      {/* Role Badge */}
-      <div className="px-3 pb-2">
-        <div className="px-4 py-2 rounded-lg text-center text-xs font-medium" 
-             style={{ background: isManager ? 'rgba(6,182,212,0.1)' : 'rgba(37,99,235,0.1)', 
-                      color: isManager ? '#67e8f9' : '#93c5fd',
-                      border: `1px solid ${isManager ? 'rgba(6,182,212,0.2)' : 'rgba(37,99,235,0.2)'}` }}>
-          {isManager ? '👔 Hiring Manager' : '🎓 Student'}
-        </div>
-      </div>
-
       {/* Logout */}
-      <div className="p-3 border-t" style={{ borderColor: 'var(--color-card-border)' }}>
+      <div className="p-3 border-t" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer"
-          style={{ color: 'var(--color-logout-text)' }}
+          style={{ color: 'rgba(255,255,255,0.5)' }}
           onMouseEnter={e => {
-            e.currentTarget.style.background = 'var(--color-logout-hover-bg)';
-            e.currentTarget.style.color = 'var(--color-logout-hover-text)';
+            e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+            e.currentTarget.style.color = '#fca5a5';
           }}
           onMouseLeave={e => {
             e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.color = 'var(--color-logout-text)';
+            e.currentTarget.style.color = 'rgba(255,255,255,0.5)';
           }}
         >
           <LogOut size={18} />
