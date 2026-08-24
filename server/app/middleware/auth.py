@@ -35,18 +35,30 @@ async def protect(
     credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
 ) -> User:
     """FastAPI dependency — verifies JWT and returns the authenticated User."""
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Invalid or expired token.",
-    )
+    # JWT decode errors
     try:
         payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[ALGORITHM])
-        user_id: str = payload.get("id")
-        if not user_id:
-            raise credentials_exception
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired token.",
+        )
+
+    user_id: str = payload.get("id")
+    if not user_id:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token payload missing user id.",
+        )
+
+    # DB lookup errors
+    try:
         user = await User.get(user_id)
     except Exception:
-        raise credentials_exception
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not fetch user from database.",
+        )
 
     if not user:
         raise HTTPException(

@@ -149,18 +149,16 @@ const JobSearch = () => {
       <div className="flex rounded-2xl p-1 mb-6 inline-flex" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
         <button
           onClick={() => setActiveTab('internal')}
-          className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-            activeTab === 'internal' ? 'text-white' : 'text-white/50 hover:text-white/70'
-          }`}
+          className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${activeTab === 'internal' ? 'text-white' : 'text-white/50 hover:text-white/70'
+            }`}
           style={activeTab === 'internal' ? { background: 'linear-gradient(135deg, #2563eb, #06b6d4)' } : {}}
         >
           🏢 Internal Jobs
         </button>
         <button
           onClick={() => setActiveTab('external')}
-          className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-            activeTab === 'external' ? 'text-white' : 'text-white/50 hover:text-white/70'
-          }`}
+          className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${activeTab === 'external' ? 'text-white' : 'text-white/50 hover:text-white/70'
+            }`}
           style={activeTab === 'external' ? { background: 'linear-gradient(135deg, #2563eb, #06b6d4)' } : {}}
         >
           🌐 Scrape External

@@ -55,17 +55,19 @@ async def update_profile(
     if body.bio is not None:
         update_data["bio"] = body.bio
     if body.resumeUrl is not None:
-        update_data["resume_url"] = body.resumeUrl
+        update_data["resumeUrl"] = body.resumeUrl
     if body.company is not None and current_user.role == "hiring_manager":
         update_data["company"] = body.company
     if body.avatar is not None:
         update_data["avatar"] = body.avatar
 
     await current_user.set(update_data)
+    # Re-fetch from DB so to_safe_dict() reflects the freshly saved values
+    refreshed = await User.get(current_user.id)
     return {
         "success": True,
         "message": "Profile updated successfully.",
-        "data": {"user": current_user.to_safe_dict()},
+        "data": {"user": refreshed.to_safe_dict()},
     }
 
 

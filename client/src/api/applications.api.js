@@ -2,7 +2,7 @@ import api from './axios';
 
 export const applicationsApi = {
   applyToJob: async (data) => {
-    const res = await api.post('/applications', data);
+    const res = await api.post('/applications/', data);
     return res.data;
   },
 

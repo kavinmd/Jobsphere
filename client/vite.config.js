@@ -10,6 +10,7 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:5000',
         changeOrigin: true,
+        followRedirects: true,  // Follow FastAPI 307 redirects server-side so browser never sees them
       },
     },
   },

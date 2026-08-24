@@ -22,7 +22,7 @@ export const jobsApi = {
   },
 
   createJob: async (data) => {
-    const res = await api.post('/jobs', data);
+    const res = await api.post('/jobs/', data);
     return res.data;
   },
 
