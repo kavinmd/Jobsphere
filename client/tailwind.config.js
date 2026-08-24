@@ -35,16 +35,16 @@ export default {
           900: '#164e63',
         },
         dark: {
-          900: '#0a0b1a',
-          800: '#0f1030',
-          700: '#151640',
-          600: '#1e2050',
-          500: '#272960',
+          900: '#0d0f1a',
+          800: '#13151f',
+          700: '#181b27',
+          600: '#1e2130',
+          500: '#252839',
         }
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)',
-        'gradient-dark': 'linear-gradient(135deg, #0a0b1a 0%, #151640 100%)',
+        'gradient-dark': 'linear-gradient(145deg, #13151f 0%, #181b27 100%)',
         'gradient-card': 'linear-gradient(145deg, rgba(37, 99, 235, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%)',
       },
       animation: {
