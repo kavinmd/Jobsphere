@@ -21,6 +21,7 @@ import MyJobs from './pages/manager/MyJobs';
 import PostJob from './pages/manager/PostJob';
 import EditJob from './pages/manager/EditJob';
 import ApplicantTracker from './pages/manager/ApplicantTracker';
+import ManagerApplications from './pages/manager/ManagerApplications';
 import ManagerProfile from './pages/manager/Profile';
 
 const App = () => {
@@ -56,6 +57,7 @@ const App = () => {
           <Route path="/manager/jobs/new" element={<PostJob />} />
           <Route path="/manager/jobs/:id/edit" element={<EditJob />} />
           <Route path="/manager/jobs/:jobId/applicants" element={<ApplicantTracker />} />
+          <Route path="/manager/applications" element={<ManagerApplications />} />
           <Route path="/manager/profile" element={<ManagerProfile />} />
         </Route>
       </Route>

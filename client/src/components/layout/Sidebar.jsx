@@ -10,6 +10,7 @@ import {
   PlusCircle,
   LogOut,
   ChevronRight,
+  Users,
 } from 'lucide-react';
 
 
@@ -26,10 +27,11 @@ const Sidebar = () => {
   ];
 
   const managerLinks = [
-    { to: '/manager/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { to: '/manager/jobs', icon: Briefcase, label: 'My Jobs' },
-    { to: '/manager/jobs/new', icon: PlusCircle, label: 'Post a Job' },
-    { to: '/manager/profile', icon: User, label: 'Profile' },
+    { to: '/manager/dashboard',    icon: LayoutDashboard, label: 'Dashboard'    },
+    { to: '/manager/jobs',         icon: Briefcase,       label: 'My Jobs'      },
+    { to: '/manager/applications', icon: Users,           label: 'Applications' },
+    { to: '/manager/jobs/new',     icon: PlusCircle,      label: 'Post a Job'   },
+    { to: '/manager/profile',      icon: User,            label: 'Profile'      },
   ];
 
   const links = isStudent ? studentLinks : managerLinks;
