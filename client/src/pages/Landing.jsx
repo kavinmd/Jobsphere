@@ -1,239 +1,322 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import {
-  Search, Briefcase, Users, Shield, Zap, TrendingUp,
-  ArrowRight, Star, CheckCircle, Globe, Sun, Moon
-} from 'lucide-react';
+  Search, MapPin, Briefcase, Users, ChevronRight,
+  ArrowRight, CheckCircle, Zap, Sun, Moon,
+  Building2, TrendingUp, Globe, Shield,
+} from "lucide-react";
+
+const POPULAR_SEARCHES = [
+  "React Developer", "Python Engineer", "Data Analyst",
+  "Product Manager", "UI/UX Designer", "DevOps Engineer",
+];
+
+const JOB_CATEGORIES = [
+  { icon: "💻", label: "Technology"  },
+  { icon: "📊", label: "Finance"     },
+  { icon: "🎨", label: "Design"      },
+  { icon: "📣", label: "Marketing"   },
+  { icon: "🏥", label: "Healthcare"  },
+  { icon: "🎓", label: "Education"   },
+  { icon: "⚙️", label: "Engineering" },
+  { icon: "📦", label: "Operations"  },
+];
+
+
 
 const Landing = () => {
   const { isAuthenticated, isStudent, isManager } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
 
-  const dashboardLink = isManager ? '/manager/dashboard' : '/student/dashboard';
+  const dashboardLink = isManager ? "/manager/dashboard" : "/student/dashboard";
 
-  const features = [
-    {
-      icon: Search,
-      title: 'Smart Job Search',
-      desc: 'Search across LinkedIn, Naukri, Internshala, and Unstop in one place.',
-      color: '#2563eb',
-    },
-    {
-      icon: Shield,
-      title: 'Role-Based Access',
-      desc: 'Secure RBAC ensures students and managers only see what they need.',
-      color: '#06b6d4',
-    },
-    {
-      icon: Briefcase,
-      title: 'Direct Job Posting',
-      desc: 'Hiring managers post and manage jobs directly on the platform.',
-      color: '#a855f7',
-    },
-    {
-      icon: Users,
-      title: 'Applicant Tracking',
-      desc: 'Managers track every applicant, update statuses, and review profiles.',
-      color: '#22c55e',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Application History',
-      desc: 'Students track all applications with real-time status updates.',
-      color: '#f59e0b',
-    },
-    {
-      icon: Globe,
-      title: 'Multi-Platform Scraping',
-      desc: 'Aggregate jobs from 4+ platforms with a single keyword search.',
-      color: '#06b6d4',
-    },
-  ];
-
-  const stats = [
-    { value: '4+', label: 'Job Platforms' },
-    { value: '2', label: 'User Roles' },
-    { value: '100%', label: 'RBAC Secure' },
-    { value: '∞', label: 'Opportunities' },
-  ];
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (keyword.trim()) params.set("keyword", keyword.trim());
+    if (location.trim()) params.set("location", location.trim());
+    navigate(
+      isAuthenticated
+        ? `/student/search?${params.toString()}`
+        : `/login?redirect=/student/search&${params.toString()}`
+    );
+  };
 
   return (
-    <div className="page-wrapper relative overflow-hidden">
-      {/* Background orbs */}
-      <div className="orb orb-1" />
-      <div className="orb orb-2" />
+    <div style={{ background: "var(--color-bg)", color: "var(--color-text)", minHeight: "100vh", fontFamily: "Inter, sans-serif" }}>
 
-      {/* Navbar */}
-      <nav className="relative z-10 flex items-center justify-between px-6 lg:px-16 py-5 border-b border-white/5">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-               style={{ background: 'linear-gradient(135deg, #2563eb, #06b6d4)' }}>
-            <Zap size={18} className="text-white-force" />
+      {/* ══════════════════════════════════════════════
+          NAVBAR
+      ══════════════════════════════════════════════ */}
+      <nav style={{
+        background: "var(--color-card-bg)",
+        borderBottom: "1px solid var(--color-card-border)",
+        position: "sticky", top: 0, zIndex: 50,
+        boxShadow: "var(--color-card-shadow)",
+      }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "64px" }}>
+          {/* Logo */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "linear-gradient(135deg,#2563eb,#06b6d4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Zap size={18} color="#fff" />
+            </div>
+            <span style={{ fontWeight: 800, fontSize: "20px", letterSpacing: "-0.5px", color: "var(--color-text)" }}>JobSphere</span>
           </div>
-          <span className="text-white font-bold text-xl">JobSphere</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={toggleTheme}
-            className="p-2.5 rounded-xl border transition-all duration-200 hover:bg-white/10 flex items-center justify-center cursor-pointer"
-            style={{
-              background: 'var(--color-input-bg)',
-              borderColor: 'var(--color-card-border)',
-              color: 'var(--color-text)',
-            }}
-            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          >
-            {theme === 'dark' ? <Moon size={18} className="text-primary-400" /> : <Sun size={18} className="text-amber-500" />}
-          </button>
 
-          {isAuthenticated ? (
-            <Link to={dashboardLink} className="btn-primary">
-              Go to Dashboard <ArrowRight size={16} />
-            </Link>
-          ) : (
-            <>
-              <Link to="/login" className="btn-secondary">Sign In</Link>
-              <Link to="/register" className="btn-primary">Get Started <ArrowRight size={16} /></Link>
-            </>
-          )}
+          {/* Nav links */}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <button onClick={toggleTheme} style={{ padding: "8px", borderRadius: "10px", border: "1px solid var(--color-card-border)", background: "var(--color-input-bg)", cursor: "pointer", display: "flex", alignItems: "center" }}>
+              {theme === "dark" ? <Moon size={17} color="#93c5fd" /> : <Sun size={17} color="#f59e0b" />}
+            </button>
+            {isAuthenticated ? (
+              <Link to={dashboardLink} className="btn-primary" style={{ fontSize: "14px" }}>
+                Dashboard <ArrowRight size={15} />
+              </Link>
+            ) : (
+              <>
+                <Link to="/login" style={{ padding: "8px 18px", borderRadius: "10px", fontWeight: 600, fontSize: "14px", color: "var(--color-text)", textDecoration: "none", border: "1px solid var(--color-card-border)", background: "var(--color-input-bg)", transition: "all 0.2s" }}>
+                  Sign In
+                </Link>
+                <Link to="/register" className="btn-primary" style={{ fontSize: "14px" }}>
+                  Post a Job
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative z-10 text-center px-6 py-24 lg:py-32">
-        <div className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-semibold"
-             style={{ background: 'rgba(37,99,235,0.15)', border: '1px solid rgba(37,99,235,0.3)', color: '#93c5fd' }}>
-          <Star size={12} fill="currentColor" />
-          Full-Stack Job Search & Application Platform
-        </div>
+      {/* ══════════════════════════════════════════════
+          HERO — dark blue gradient like Indeed
+      ══════════════════════════════════════════════ */}
+      <section style={{ background: "linear-gradient(135deg, #1e3a6e 0%, #1a4480 40%, #0d3b6e 100%)", padding: "72px 24px 80px" }}>
+        <div style={{ maxWidth: "860px", margin: "0 auto", textAlign: "center" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "999px", padding: "5px 14px", marginBottom: "24px" }}>
+            <TrendingUp size={13} color="#93c5fd" />
+            <span style={{ color: "#bfdbfe", fontSize: "12px", fontWeight: 600 }}>India&apos;s fastest growing job platform</span>
+          </div>
 
-        <h1 className="text-5xl lg:text-7xl font-black text-white leading-tight mb-6">
-          Find Your Dream Job
-          <br />
-          <span className="gradient-text">Smarter & Faster</span>
-        </h1>
+          <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.15, marginBottom: "16px", letterSpacing: "-1px" }}>
+            Find the Job That<br />
+            <span style={{ background: "linear-gradient(90deg,#60a5fa,#34d399)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              Fits Your Future
+            </span>
+          </h1>
 
-        <p className="text-white/60 text-lg lg:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          A unified platform to search and scrape jobs from LinkedIn, Naukri, Internshala, and Unstop —
-          while giving hiring managers powerful tools to post and manage openings.
-        </p>
+          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "17px", marginBottom: "36px", lineHeight: 1.65 }}>
+            Discover career opportunities, apply seamlessly with your profile, and track your applications in real-time.
+            A unified platform built for job seekers and hiring teams.
+          </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          {isAuthenticated ? (
-            <Link to={dashboardLink} className="btn-primary text-base px-8 py-4">
-              Open Dashboard <ArrowRight size={18} />
-            </Link>
-          ) : (
-            <>
-              <Link to="/register?role=student" className="btn-primary text-base px-8 py-4">
-                I'm a Student <ArrowRight size={18} />
-              </Link>
-              <Link to="/register?role=hiring_manager" className="btn-secondary text-base px-8 py-4">
-                I'm a Hiring Manager
-              </Link>
-            </>
-          )}
-        </div>
-
-        {/* Stats Row */}
-        <div className="flex flex-wrap justify-center gap-8 mt-16">
-          {stats.map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <div className="text-3xl font-black gradient-text">{value}</div>
-              <div className="text-white/50 text-sm mt-1">{label}</div>
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "16px", padding: "8px", display: "flex", alignItems: "center", gap: "0", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", maxWidth: "780px", margin: "0 auto" }}>
+            <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "10px", padding: "4px 12px", borderRight: "1px solid #e5e7eb" }}>
+              <Search size={18} color="#6b7280" />
+              <input
+                type="text"
+                value={keyword}
+                onChange={e => setKeyword(e.target.value)}
+                placeholder='Job title, skill, or company'
+                style={{ border: "none", outline: "none", fontSize: "15px", color: "#111827", background: "transparent", width: "100%" }}
+              />
             </div>
-          ))}
+            <div style={{ flex: "0 0 220px", display: "flex", alignItems: "center", gap: "10px", padding: "4px 12px" }}>
+              <MapPin size={18} color="#6b7280" />
+              <input
+                type="text"
+                value={location}
+                onChange={e => setLocation(e.target.value)}
+                placeholder="City or remote"
+                style={{ border: "none", outline: "none", fontSize: "15px", color: "#111827", background: "transparent", width: "100%" }}
+              />
+            </div>
+            <button type="submit" style={{ background: "linear-gradient(135deg,#2563eb,#06b6d4)", color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontWeight: 700, fontSize: "15px", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
+              Find Jobs
+            </button>
+          </form>
+
+          {/* Popular Searches */}
+          <div style={{ marginTop: "20px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px" }}>
+            <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "13px", alignSelf: "center" }}>Popular:</span>
+            {POPULAR_SEARCHES.map(s => (
+              <button
+                key={s}
+                onClick={() => { setKeyword(s); }}
+                style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)", color: "#bfdbfe", borderRadius: "999px", padding: "4px 14px", fontSize: "12px", cursor: "pointer", fontWeight: 500, transition: "all 0.2s" }}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="relative z-10 px-6 lg:px-16 pb-24">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Everything You Need
-          </h2>
-          <p className="text-white/50 text-lg">Built for students and hiring managers alike</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {features.map(({ icon: Icon, title, desc, color }) => (
-            <div key={title} className="section-card group hover:border-white/20 transition-all duration-300 cursor-default">
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
-                   style={{ background: `${color}20`, border: `1px solid ${color}30` }}>
-                <Icon size={22} style={{ color }} />
+      {/* ══════════════════════════════════════════════
+          FEATURE HIGHLIGHTS BAR (DETAILS ONLY - NO COUNTS)
+      ══════════════════════════════════════════════ */}
+      <section style={{ borderBottom: "1px solid var(--color-card-border)", background: "var(--color-card-bg)" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", textAlign: "left" }}>
+          {[
+            { icon: <Briefcase size={20} color="#2563eb" />, title: "Verified Listings", desc: "Curated openings across top industries" },
+            { icon: <CheckCircle size={20} color="#06b6d4" />, title: "Direct Applications", desc: "Apply instantly with your resume and profile" },
+            { icon: <TrendingUp size={20} color="#10b981" />, title: "Real-Time Tracking", desc: "Monitor application and interview status" },
+            { icon: <Shield size={20} color="#8b5cf6" />, title: "Role-Based Access", desc: "Dedicated student and manager portals" },
+          ].map(({ icon, title, desc }, idx) => (
+            <div key={title} style={{ padding: "20px 20px", display: "flex", alignItems: "center", gap: "14px", borderRight: idx !== 3 ? "1px solid var(--color-card-border)" : "none" }}>
+              <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: "var(--color-bg)", border: "1px solid var(--color-card-border)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                {icon}
               </div>
-              <h3 className="text-white font-semibold text-lg mb-2">{title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{desc}</p>
+              <div>
+                <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--color-text)" }}>{title}</div>
+                <div style={{ color: "var(--color-text-muted)", fontSize: "12px", marginTop: "2px" }}>{desc}</div>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Two Roles Section */}
-      <section className="relative z-10 px-6 lg:px-16 pb-24">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Student card */}
-          <div className="section-card relative overflow-hidden" style={{ borderColor: 'rgba(37,99,235,0.3)' }}>
-            <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-20"
-                 style={{ background: '#2563eb', transform: 'translate(30%, -30%)' }} />
-            <div className="text-4xl mb-4">🎓</div>
-            <h3 className="text-white font-bold text-xl mb-3">For Students</h3>
-            <ul className="space-y-2.5 text-white/60 text-sm">
-              {[
-                'Search & scrape jobs from 4+ platforms',
-                'Apply to internal and external postings',
-                'Track application history & status',
-                'Build and manage your profile',
-              ].map(item => (
-                <li key={item} className="flex items-start gap-2">
-                  <CheckCircle size={14} className="text-primary-400 mt-0.5 flex-shrink-0" />
+      {/* ══════════════════════════════════════════════
+          JOB CATEGORIES
+      ══════════════════════════════════════════════ */}
+      <section style={{ maxWidth: "1200px", margin: "0 auto", padding: "56px 24px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "28px" }}>
+          <div>
+            <h2 style={{ fontSize: "24px", fontWeight: 800, color: "var(--color-text)", marginBottom: "4px" }}>Browse by Category</h2>
+            <p style={{ color: "var(--color-text-muted)", fontSize: "14px" }}>Explore opportunities in your field</p>
+          </div>
+          <Link to={isAuthenticated ? "/student/search" : "/register"} style={{ display: "flex", alignItems: "center", gap: "4px", color: "#2563eb", fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>
+            View all <ChevronRight size={16} />
+          </Link>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "14px" }}>
+          {JOB_CATEGORIES.map(({ icon, label }) => (
+            <Link
+              to={isAuthenticated ? `/student/search?keyword=${label}` : "/register"}
+              key={label}
+              style={{ display: "flex", alignItems: "center", gap: "14px", padding: "18px", borderRadius: "14px", background: "var(--color-card-bg)", border: "1px solid var(--color-card-border)", boxShadow: "var(--color-card-shadow)", textDecoration: "none", transition: "all 0.2s", cursor: "pointer" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(37,99,235,0.4)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--color-card-border)"; e.currentTarget.style.transform = "none"; }}
+            >
+              <span style={{ fontSize: "26px" }}>{icon}</span>
+              <div style={{ fontWeight: 700, color: "var(--color-text)", fontSize: "14px" }}>{label}</div>
+              <ChevronRight size={15} color="var(--color-text-muted)" style={{ marginLeft: "auto" }} />
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════
+          HOW IT WORKS
+      ══════════════════════════════════════════════ */}
+      <section style={{ background: "var(--color-card-bg)", borderTop: "1px solid var(--color-card-border)", borderBottom: "1px solid var(--color-card-border)", padding: "56px 24px" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <h2 style={{ textAlign: "center", fontSize: "24px", fontWeight: 800, color: "var(--color-text)", marginBottom: "8px" }}>How JobSphere Works</h2>
+          <p style={{ textAlign: "center", color: "var(--color-text-muted)", fontSize: "14px", marginBottom: "44px" }}>Get hired in 3 simple steps</p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
+            {[
+              { step: "01", icon: <Search size={24} color="#2563eb" />, title: "Search Jobs", desc: "Search across 4+ platforms or browse internal openings — all filtered to your preferences." },
+              { step: "02", icon: <Briefcase size={24} color="#06b6d4" />, title: "Apply Instantly", desc: "Submit applications with a cover letter. Track every application from your dashboard." },
+              { step: "03", icon: <CheckCircle size={24} color="#22c55e" />, title: "Get Hired", desc: "Managers review and update your status. Get shortlisted and land your dream role." },
+            ].map(({ step, icon, title, desc }) => (
+              <div key={step} style={{ textAlign: "center", padding: "28px 20px" }}>
+                <div style={{ width: "56px", height: "56px", borderRadius: "16px", background: "var(--color-bg)", border: "1px solid var(--color-card-border)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+                  {icon}
+                </div>
+                <div style={{ fontSize: "12px", fontWeight: 700, color: "#2563eb", marginBottom: "8px", letterSpacing: "2px" }}>STEP {step}</div>
+                <h3 style={{ fontWeight: 700, fontSize: "16px", color: "var(--color-text)", marginBottom: "8px" }}>{title}</h3>
+                <p style={{ color: "var(--color-text-muted)", fontSize: "13px", lineHeight: 1.65 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════
+          DUAL ROLE CTA
+      ══════════════════════════════════════════════ */}
+      <section style={{ background: "var(--color-card-bg)", borderTop: "1px solid var(--color-card-border)", borderBottom: "1px solid var(--color-card-border)", padding: "56px 24px" }}>
+        <div style={{ maxWidth: "960px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+          {/* Student */}
+          <div style={{ borderRadius: "18px", border: "1px solid rgba(37,99,235,0.3)", padding: "36px", background: "linear-gradient(135deg, rgba(37,99,235,0.07) 0%, rgba(6,182,212,0.04) 100%)", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: "-30px", right: "-30px", width: "120px", height: "120px", borderRadius: "50%", background: "rgba(37,99,235,0.08)", filter: "blur(20px)" }} />
+            <div style={{ fontSize: "40px", marginBottom: "12px" }}>🎓</div>
+            <h3 style={{ fontSize: "20px", fontWeight: 800, color: "var(--color-text)", marginBottom: "8px" }}>I&apos;m a Job Seeker</h3>
+            <p style={{ color: "var(--color-text-muted)", fontSize: "13px", marginBottom: "20px", lineHeight: 1.65 }}>
+              Search and apply to thousands of jobs. Track your applications and get hired faster.
+            </p>
+            <ul style={{ listStyle: "none", marginBottom: "24px", display: "flex", flexDirection: "column", gap: "8px" }}>
+              {["Discover verified jobs across industries", "One-click apply with your resume and profile", "Real-time application status tracking"].map(item => (
+                <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "13px", color: "var(--color-text-secondary)" }}>
+                  <CheckCircle size={14} color="#2563eb" style={{ flexShrink: 0, marginTop: "2px" }} />
                   {item}
                 </li>
               ))}
             </ul>
-            <Link to="/register?role=student" className="btn-primary mt-6 w-full justify-center">
-              Register as Student
+            <Link to="/register?role=student" className="btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: "14px", padding: "12px" }}>
+              Create Free Account <ArrowRight size={15} />
             </Link>
           </div>
 
-          {/* Manager card */}
-          <div className="section-card relative overflow-hidden" style={{ borderColor: 'rgba(6,182,212,0.3)' }}>
-            <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-20"
-                 style={{ background: '#06b6d4', transform: 'translate(30%, -30%)' }} />
-            <div className="text-4xl mb-4">👔</div>
-            <h3 className="text-white font-bold text-xl mb-3">For Hiring Managers</h3>
-            <ul className="space-y-2.5 text-white/60 text-sm">
-              {[
-                'Post and manage job openings',
-                'Edit or close postings anytime',
-                'View applicant profiles & details',
-                'Update application statuses',
-              ].map(item => (
-                <li key={item} className="flex items-start gap-2">
-                  <CheckCircle size={14} className="text-cyan-400 mt-0.5 flex-shrink-0" />
+          {/* Manager */}
+          <div style={{ borderRadius: "18px", border: "1px solid rgba(6,182,212,0.3)", padding: "36px", background: "linear-gradient(135deg, rgba(6,182,212,0.07) 0%, rgba(37,99,235,0.04) 100%)", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: "-30px", right: "-30px", width: "120px", height: "120px", borderRadius: "50%", background: "rgba(6,182,212,0.08)", filter: "blur(20px)" }} />
+            <div style={{ fontSize: "40px", marginBottom: "12px" }}>👔</div>
+            <h3 style={{ fontSize: "20px", fontWeight: 800, color: "var(--color-text)", marginBottom: "8px" }}>I&apos;m a Hiring Manager</h3>
+            <p style={{ color: "var(--color-text-muted)", fontSize: "13px", marginBottom: "20px", lineHeight: 1.65 }}>
+              Post jobs, review applicants, and find the right talent with powerful hiring tools.
+            </p>
+            <ul style={{ listStyle: "none", marginBottom: "24px", display: "flex", flexDirection: "column", gap: "8px" }}>
+              {["Post and manage job listings", "Review applicant profiles & resumes", "Update statuses and shortlist candidates"].map(item => (
+                <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "13px", color: "var(--color-text-secondary)" }}>
+                  <CheckCircle size={14} color="#06b6d4" style={{ flexShrink: 0, marginTop: "2px" }} />
                   {item}
                 </li>
               ))}
             </ul>
-            <Link to="/register?role=hiring_manager" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white transition-all duration-200 cursor-pointer mt-6 w-full"
-                  style={{ background: 'linear-gradient(135deg, #06b6d4, #0891b2)' }}>
-              Register as Manager
+            <Link to="/register?role=hiring_manager" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "linear-gradient(135deg,#06b6d4,#0891b2)", color: "#fff", borderRadius: "12px", padding: "12px", fontWeight: 700, fontSize: "14px", textDecoration: "none", width: "100%" }}>
+              Start Hiring for Free <ArrowRight size={15} />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-white/5 px-6 py-8 text-center">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Zap size={16} className="text-primary-400" />
-          <span className="text-white font-semibold">JobSphere</span>
+      {/* ══════════════════════════════════════════════
+          FOOTER
+      ══════════════════════════════════════════════ */}
+      <footer style={{ background: "var(--color-card-bg)", borderTop: "1px solid var(--color-card-border)", padding: "32px 24px 24px" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px", marginBottom: "20px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "linear-gradient(135deg,#2563eb,#06b6d4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Zap size={14} color="#fff" />
+              </div>
+              <span style={{ fontWeight: 800, fontSize: "16px", color: "var(--color-text)" }}>JobSphere</span>
+            </div>
+            <div style={{ display: "flex", gap: "24px" }}>
+              {["About", "Privacy Policy", "Terms of Service", "Contact"].map(l => (
+                <a key={l} href="#" style={{ color: "var(--color-text-muted)", fontSize: "13px", textDecoration: "none", fontWeight: 500 }}>{l}</a>
+              ))}
+            </div>
+          </div>
+          <div style={{ borderTop: "1px solid var(--color-card-border)", paddingTop: "16px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" }}>
+            <p style={{ color: "var(--color-text-muted)", fontSize: "12px" }}>&copy; 2026 JobSphere. All rights reserved.</p>
+            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+              <span style={{ display: "flex", alignItems: "center", gap: "5px", color: "var(--color-text-muted)", fontSize: "12px" }}>
+                <Shield size={12} /> SSL Secured
+              </span>
+              <span style={{ display: "flex", alignItems: "center", gap: "5px", color: "var(--color-text-muted)", fontSize: "12px" }}>
+                <Users size={12} /> RBAC Protected
+              </span>
+            </div>
+          </div>
         </div>
-        <p className="text-white/30 text-xs">
-          JobSphere Platform — Job Search & Hiring Solution
-        </p>
       </footer>
     </div>
   );
