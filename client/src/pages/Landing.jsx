@@ -59,19 +59,19 @@ const Landing = () => {
         position: "sticky", top: 0, zIndex: 50,
         boxShadow: "var(--color-card-shadow)",
       }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "64px" }}>
+        <div style={{ width: "100%", padding: "0 28px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "64px" }}>
           {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "linear-gradient(135deg,#2563eb,#06b6d4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "linear-gradient(135deg, #0f172a, #334155)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Zap size={18} color="#fff" />
             </div>
             <span style={{ fontWeight: 800, fontSize: "20px", letterSpacing: "-0.5px", color: "var(--color-text)" }}>JobSphere</span>
           </div>
 
           {/* Nav links */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <button onClick={toggleTheme} style={{ padding: "8px", borderRadius: "10px", border: "1px solid var(--color-card-border)", background: "var(--color-input-bg)", cursor: "pointer", display: "flex", alignItems: "center" }}>
-              {theme === "dark" ? <Moon size={17} color="#93c5fd" /> : <Sun size={17} color="#f59e0b" />}
+              {theme === "dark" ? <Moon size={17} color="#94a3b8" /> : <Sun size={17} color="#f59e0b" />}
             </button>
             {isAuthenticated ? (
               <Link to={dashboardLink} className="btn-primary" style={{ fontSize: "14px" }}>
@@ -92,62 +92,85 @@ const Landing = () => {
       </nav>
 
       {/* ══════════════════════════════════════════════
-          HERO — dark blue gradient like Indeed
+          HERO — Clean & Elegant Neutral Hero
       ══════════════════════════════════════════════ */}
-      <section style={{ background: "linear-gradient(135deg, #1e3a6e 0%, #1a4480 40%, #0d3b6e 100%)", padding: "72px 24px 80px" }}>
+      <section style={{
+        background: "var(--color-bg-gradient, var(--color-bg))",
+        borderBottom: "1px solid var(--color-card-border)",
+        padding: "80px 24px 88px",
+        position: "relative",
+      }}>
         <div style={{ maxWidth: "860px", margin: "0 auto", textAlign: "center" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "999px", padding: "5px 14px", marginBottom: "24px" }}>
-            <TrendingUp size={13} color="#93c5fd" />
-            <span style={{ color: "#bfdbfe", fontSize: "12px", fontWeight: 600 }}>India&apos;s fastest growing job platform</span>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: "8px",
+            background: "var(--color-card-bg)",
+            border: "1px solid var(--color-card-border)",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+            borderRadius: "999px", padding: "6px 16px", marginBottom: "24px"
+          }}>
+            <TrendingUp size={14} color="#10b981" />
+            <span style={{ color: "var(--color-text-secondary)", fontSize: "13px", fontWeight: 600 }}>Modern Career &amp; Hiring Platform</span>
           </div>
 
-          <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.15, marginBottom: "16px", letterSpacing: "-1px" }}>
-            Find the Job That<br />
-            <span style={{ background: "linear-gradient(90deg,#60a5fa,#34d399)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              Fits Your Future
-            </span>
+          <h1 style={{ fontSize: "clamp(2.2rem, 5vw, 3.6rem)", fontWeight: 900, color: "var(--color-text)", lineHeight: 1.15, marginBottom: "18px", letterSpacing: "-1px" }}>
+            Find the Job That Fits Your Future
           </h1>
 
-          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "17px", marginBottom: "36px", lineHeight: 1.65 }}>
-            Discover career opportunities, apply seamlessly with your profile, and track your applications in real-time.
+          <p style={{ color: "var(--color-text-muted)", fontSize: "17px", maxWidth: "680px", margin: "0 auto 36px", lineHeight: 1.65 }}>
+            Discover career opportunities, apply seamlessly with your profile, and track your applications in real time.
             A unified platform built for job seekers and hiring teams.
           </p>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} style={{ background: "#fff", borderRadius: "16px", padding: "8px", display: "flex", alignItems: "center", gap: "0", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", maxWidth: "780px", margin: "0 auto" }}>
-            <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "10px", padding: "4px 12px", borderRight: "1px solid #e5e7eb" }}>
-              <Search size={18} color="#6b7280" />
+          <form onSubmit={handleSearch} style={{
+            background: "var(--color-card-bg)",
+            borderRadius: "16px", padding: "8px",
+            display: "flex", alignItems: "center", gap: "0",
+            boxShadow: "0 8px 30px rgba(0,0,0,0.06)",
+            border: "1px solid var(--color-card-border)",
+            maxWidth: "780px", margin: "0 auto"
+          }}>
+            <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "10px", padding: "6px 14px", borderRight: "1px solid var(--color-card-border)" }}>
+              <Search size={18} color="var(--color-text-muted)" />
               <input
                 type="text"
                 value={keyword}
                 onChange={e => setKeyword(e.target.value)}
                 placeholder='Job title, skill, or company'
-                style={{ border: "none", outline: "none", fontSize: "15px", color: "#111827", background: "transparent", width: "100%" }}
+                style={{ border: "none", outline: "none", fontSize: "15px", color: "var(--color-text)", background: "transparent", width: "100%" }}
               />
             </div>
-            <div style={{ flex: "0 0 220px", display: "flex", alignItems: "center", gap: "10px", padding: "4px 12px" }}>
-              <MapPin size={18} color="#6b7280" />
+            <div style={{ flex: "0 0 220px", display: "flex", alignItems: "center", gap: "10px", padding: "6px 14px" }}>
+              <MapPin size={18} color="var(--color-text-muted)" />
               <input
                 type="text"
                 value={location}
                 onChange={e => setLocation(e.target.value)}
                 placeholder="City or remote"
-                style={{ border: "none", outline: "none", fontSize: "15px", color: "#111827", background: "transparent", width: "100%" }}
+                style={{ border: "none", outline: "none", fontSize: "15px", color: "var(--color-text)", background: "transparent", width: "100%" }}
               />
             </div>
-            <button type="submit" style={{ background: "linear-gradient(135deg,#2563eb,#06b6d4)", color: "#fff", border: "none", borderRadius: "10px", padding: "12px 28px", fontWeight: 700, fontSize: "15px", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
+            <button type="submit" className="btn-primary" style={{ padding: "12px 28px", fontWeight: 700, fontSize: "15px", borderRadius: "10px", flexShrink: 0 }}>
               Find Jobs
             </button>
           </form>
 
           {/* Popular Searches */}
-          <div style={{ marginTop: "20px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px" }}>
-            <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "13px", alignSelf: "center" }}>Popular:</span>
+          <div style={{ marginTop: "24px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px", alignItems: "center" }}>
+            <span style={{ color: "var(--color-text-muted)", fontSize: "13px", fontWeight: 500 }}>Popular:</span>
             {POPULAR_SEARCHES.map(s => (
               <button
                 key={s}
                 onClick={() => { setKeyword(s); }}
-                style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)", color: "#bfdbfe", borderRadius: "999px", padding: "4px 14px", fontSize: "12px", cursor: "pointer", fontWeight: 500, transition: "all 0.2s" }}
+                style={{
+                  background: "var(--color-card-bg)",
+                  border: "1px solid var(--color-card-border)",
+                  color: "var(--color-text-secondary)",
+                  borderRadius: "999px", padding: "4px 14px", fontSize: "12px",
+                  cursor: "pointer", fontWeight: 500, transition: "all 0.2s"
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--color-text-muted)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--color-card-border)"; }}
               >
                 {s}
               </button>
@@ -157,17 +180,17 @@ const Landing = () => {
       </section>
 
       {/* ══════════════════════════════════════════════
-          FEATURE HIGHLIGHTS BAR (DETAILS ONLY - NO COUNTS)
+          FEATURE HIGHLIGHTS BAR (DETAILS ONLY)
       ══════════════════════════════════════════════ */}
       <section style={{ borderBottom: "1px solid var(--color-card-border)", background: "var(--color-card-bg)" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", textAlign: "left" }}>
           {[
-            { icon: <Briefcase size={20} color="#2563eb" />, title: "Verified Listings", desc: "Curated openings across top industries" },
-            { icon: <CheckCircle size={20} color="#06b6d4" />, title: "Direct Applications", desc: "Apply instantly with your resume and profile" },
-            { icon: <TrendingUp size={20} color="#10b981" />, title: "Real-Time Tracking", desc: "Monitor application and interview status" },
-            { icon: <Shield size={20} color="#8b5cf6" />, title: "Role-Based Access", desc: "Dedicated student and manager portals" },
+            { icon: <Briefcase size={20} color="var(--color-text)" />, title: "Verified Listings", desc: "Curated openings across top industries" },
+            { icon: <CheckCircle size={20} color="#10b981" />, title: "Direct Applications", desc: "Apply instantly with your resume and profile" },
+            { icon: <TrendingUp size={20} color="#f59e0b" />, title: "Real-Time Tracking", desc: "Monitor application and interview status" },
+            { icon: <Shield size={20} color="var(--color-text-secondary)" />, title: "Role-Based Access", desc: "Dedicated student and manager portals" },
           ].map(({ icon, title, desc }, idx) => (
-            <div key={title} style={{ padding: "20px 20px", display: "flex", alignItems: "center", gap: "14px", borderRight: idx !== 3 ? "1px solid var(--color-card-border)" : "none" }}>
+            <div key={title} style={{ padding: "22px 20px", display: "flex", alignItems: "center", gap: "14px", borderRight: idx !== 3 ? "1px solid var(--color-card-border)" : "none" }}>
               <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: "var(--color-bg)", border: "1px solid var(--color-card-border)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                 {icon}
               </div>
@@ -189,7 +212,7 @@ const Landing = () => {
             <h2 style={{ fontSize: "24px", fontWeight: 800, color: "var(--color-text)", marginBottom: "4px" }}>Browse by Category</h2>
             <p style={{ color: "var(--color-text-muted)", fontSize: "14px" }}>Explore opportunities in your field</p>
           </div>
-          <Link to={isAuthenticated ? "/student/search" : "/register"} style={{ display: "flex", alignItems: "center", gap: "4px", color: "#2563eb", fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>
+          <Link to={isAuthenticated ? "/student/search" : "/register"} style={{ display: "flex", alignItems: "center", gap: "4px", color: "var(--color-text)", fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>
             View all <ChevronRight size={16} />
           </Link>
         </div>
@@ -200,7 +223,7 @@ const Landing = () => {
               to={isAuthenticated ? `/student/search?keyword=${label}` : "/register"}
               key={label}
               style={{ display: "flex", alignItems: "center", gap: "14px", padding: "18px", borderRadius: "14px", background: "var(--color-card-bg)", border: "1px solid var(--color-card-border)", boxShadow: "var(--color-card-shadow)", textDecoration: "none", transition: "all 0.2s", cursor: "pointer" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(37,99,235,0.4)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--color-text-muted)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--color-card-border)"; e.currentTarget.style.transform = "none"; }}
             >
               <span style={{ fontSize: "26px" }}>{icon}</span>
@@ -221,15 +244,15 @@ const Landing = () => {
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
             {[
-              { step: "01", icon: <Search size={24} color="#2563eb" />, title: "Search Jobs", desc: "Search across 4+ platforms or browse internal openings — all filtered to your preferences." },
-              { step: "02", icon: <Briefcase size={24} color="#06b6d4" />, title: "Apply Instantly", desc: "Submit applications with a cover letter. Track every application from your dashboard." },
-              { step: "03", icon: <CheckCircle size={24} color="#22c55e" />, title: "Get Hired", desc: "Managers review and update your status. Get shortlisted and land your dream role." },
+              { step: "01", icon: <Search size={22} color="var(--color-text)" />, title: "Search Jobs", desc: "Discover openings with tailored filters for role, skillset, and location." },
+              { step: "02", icon: <Briefcase size={22} color="#10b981" />, title: "Apply Instantly", desc: "Submit applications with your resume. Track every application from your dashboard." },
+              { step: "03", icon: <CheckCircle size={22} color="#f59e0b" />, title: "Get Hired", desc: "Managers review profiles, shortlist candidates, and update statuses in real time." },
             ].map(({ step, icon, title, desc }) => (
               <div key={step} style={{ textAlign: "center", padding: "28px 20px" }}>
                 <div style={{ width: "56px", height: "56px", borderRadius: "16px", background: "var(--color-bg)", border: "1px solid var(--color-card-border)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
                   {icon}
                 </div>
-                <div style={{ fontSize: "12px", fontWeight: 700, color: "#2563eb", marginBottom: "8px", letterSpacing: "2px" }}>STEP {step}</div>
+                <div style={{ fontSize: "12px", fontWeight: 700, color: "var(--color-text-muted)", marginBottom: "8px", letterSpacing: "2px" }}>STEP {step}</div>
                 <h3 style={{ fontWeight: 700, fontSize: "16px", color: "var(--color-text)", marginBottom: "8px" }}>{title}</h3>
                 <p style={{ color: "var(--color-text-muted)", fontSize: "13px", lineHeight: 1.65 }}>{desc}</p>
               </div>
@@ -241,20 +264,19 @@ const Landing = () => {
       {/* ══════════════════════════════════════════════
           DUAL ROLE CTA
       ══════════════════════════════════════════════ */}
-      <section style={{ background: "var(--color-card-bg)", borderTop: "1px solid var(--color-card-border)", borderBottom: "1px solid var(--color-card-border)", padding: "56px 24px" }}>
+      <section style={{ padding: "56px 24px" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
           {/* Student */}
-          <div style={{ borderRadius: "18px", border: "1px solid rgba(37,99,235,0.3)", padding: "36px", background: "linear-gradient(135deg, rgba(37,99,235,0.07) 0%, rgba(6,182,212,0.04) 100%)", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: "-30px", right: "-30px", width: "120px", height: "120px", borderRadius: "50%", background: "rgba(37,99,235,0.08)", filter: "blur(20px)" }} />
+          <div style={{ borderRadius: "18px", border: "1px solid var(--color-card-border)", padding: "36px", background: "var(--color-card-bg)", boxShadow: "var(--color-card-shadow)", position: "relative", overflow: "hidden" }}>
             <div style={{ fontSize: "40px", marginBottom: "12px" }}>🎓</div>
             <h3 style={{ fontSize: "20px", fontWeight: 800, color: "var(--color-text)", marginBottom: "8px" }}>I&apos;m a Job Seeker</h3>
             <p style={{ color: "var(--color-text-muted)", fontSize: "13px", marginBottom: "20px", lineHeight: 1.65 }}>
-              Search and apply to thousands of jobs. Track your applications and get hired faster.
+              Search and apply to verified jobs. Track your applications and get hired faster.
             </p>
             <ul style={{ listStyle: "none", marginBottom: "24px", display: "flex", flexDirection: "column", gap: "8px" }}>
               {["Discover verified jobs across industries", "One-click apply with your resume and profile", "Real-time application status tracking"].map(item => (
                 <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "13px", color: "var(--color-text-secondary)" }}>
-                  <CheckCircle size={14} color="#2563eb" style={{ flexShrink: 0, marginTop: "2px" }} />
+                  <CheckCircle size={14} color="#10b981" style={{ flexShrink: 0, marginTop: "2px" }} />
                   {item}
                 </li>
               ))}
@@ -265,8 +287,7 @@ const Landing = () => {
           </div>
 
           {/* Manager */}
-          <div style={{ borderRadius: "18px", border: "1px solid rgba(6,182,212,0.3)", padding: "36px", background: "linear-gradient(135deg, rgba(6,182,212,0.07) 0%, rgba(37,99,235,0.04) 100%)", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: "-30px", right: "-30px", width: "120px", height: "120px", borderRadius: "50%", background: "rgba(6,182,212,0.08)", filter: "blur(20px)" }} />
+          <div style={{ borderRadius: "18px", border: "1px solid var(--color-card-border)", padding: "36px", background: "var(--color-card-bg)", boxShadow: "var(--color-card-shadow)", position: "relative", overflow: "hidden" }}>
             <div style={{ fontSize: "40px", marginBottom: "12px" }}>👔</div>
             <h3 style={{ fontSize: "20px", fontWeight: 800, color: "var(--color-text)", marginBottom: "8px" }}>I&apos;m a Hiring Manager</h3>
             <p style={{ color: "var(--color-text-muted)", fontSize: "13px", marginBottom: "20px", lineHeight: 1.65 }}>
@@ -275,13 +296,13 @@ const Landing = () => {
             <ul style={{ listStyle: "none", marginBottom: "24px", display: "flex", flexDirection: "column", gap: "8px" }}>
               {["Post and manage job listings", "Review applicant profiles & resumes", "Update statuses and shortlist candidates"].map(item => (
                 <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "13px", color: "var(--color-text-secondary)" }}>
-                  <CheckCircle size={14} color="#06b6d4" style={{ flexShrink: 0, marginTop: "2px" }} />
+                  <CheckCircle size={14} color="#10b981" style={{ flexShrink: 0, marginTop: "2px" }} />
                   {item}
                 </li>
               ))}
             </ul>
-            <Link to="/register?role=hiring_manager" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "linear-gradient(135deg,#06b6d4,#0891b2)", color: "#fff", borderRadius: "12px", padding: "12px", fontWeight: 700, fontSize: "14px", textDecoration: "none", width: "100%" }}>
-              Start Hiring for Free <ArrowRight size={15} />
+            <Link to="/register?role=hiring_manager" className="btn-secondary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", borderRadius: "12px", padding: "12px", fontWeight: 700, fontSize: "14px", textDecoration: "none", width: "100%" }}>
+              Start Hiring <ArrowRight size={15} />
             </Link>
           </div>
         </div>
@@ -294,7 +315,7 @@ const Landing = () => {
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px", marginBottom: "20px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "linear-gradient(135deg,#2563eb,#06b6d4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "linear-gradient(135deg, #0f172a, #334155)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Zap size={14} color="#fff" />
               </div>
               <span style={{ fontWeight: 800, fontSize: "16px", color: "var(--color-text)" }}>JobSphere</span>
